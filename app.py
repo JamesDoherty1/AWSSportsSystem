@@ -58,7 +58,19 @@ def admin():
 
 @app.route('/explore')
 def explore():
-    return render_template('/explore.html')
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM Clubs')
+    club_data = cursor.fetchall()
+    return render_template('/explore.html', club_data=club_data)
+
+@app.route('/explore/<int:id>')
+def clubpage(id):
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM Clubs WHERE clubid = ?', (id,))
+    club_data = cursor.fetchone()
+    return render_template('clubpage.html', club_data=club_data)
 
 
 login_manager = LoginManager(app)
