@@ -56,6 +56,10 @@ def admin():
 
     return render_template('/admin.html', current_user=current_user, role=role_data[5], user_data=user_data)
 
+@app.route('/explore')
+def explore():
+    return render_template('/explore.html')
+
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
