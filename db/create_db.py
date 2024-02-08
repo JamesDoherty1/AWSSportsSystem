@@ -24,6 +24,7 @@ cursor.execute(create_users_table_query)
 conn.commit()
 
 
+
 # Create ClubMemberships table
 create_club_memberships_table_query = '''
 CREATE TABLE IF NOT EXISTS ClubMemberships (
@@ -101,10 +102,6 @@ INSERT INTO Users (Username, Password, Contact, Email, Role, ApprovalStatus)
 VALUES (?, ?, ?, ?, ?, ?)
 '''
 
-
-user_data = ('James', '1234', '123456789', 'James@gmail.com', 'Student', 'Approved')
-cursor.execute(insert_user_query, user_data)
-conn.commit()
 
 # Close the cursor and connection
 cursor.close()

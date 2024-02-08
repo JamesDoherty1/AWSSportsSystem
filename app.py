@@ -66,7 +66,7 @@ def load_user(user_id):
 def loginDataProcess():
     username = request.form.get('loginName')
     password = request.form.get('loginPassword')
-    hashedPass = password#calculate_sha256(password)
+    hashedPass = calculate_sha256(password)
     conn = db.connect('db/user_data.db')
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM Users WHERE Username = ? AND Password = ?', (username, hashedPass))
@@ -83,15 +83,14 @@ def loginDataProcess():
 
 @app.route('/registerProcess', methods=['POST'])
 def registerDataProcess():
-    username = request.form.get('regName')
-    password = request.form.get('regPassword')
-    first_name = request.form.get('firstName')
-    last_name = request.form.get('lastName')
-    address = request.form.get('address')
-    phoneNo = request.form.get('phoneNumber')
-
+    username = request.form.get('Username')
+    password = request.form.get('Password')
     hashedPass = calculate_sha256(password)
-    password_repeat = request.form.get('regPasswordRepeat')
+    email = request.form.get('Email')
+    contact = request.form.get('mobileNumber')
+    print(username,password,hashedPass,email,contact)
+
+    password_repeat = request.form.get('RepeatPassword')
 
     if not username or not password or not password_repeat or password != password_repeat:
         flash('Invalid registration data. Please check your inputs.', 'error')
@@ -100,7 +99,7 @@ def registerDataProcess():
     conn = db.connect('db/user_data.db')
     cursor = conn.cursor()
 
-    cursor.execute('SELECT * FROM loginInfo WHERE Username = ?', (username,))
+    cursor.execute('SELECT * FROM Users WHERE Username = ?', (username,))
     user_data = cursor.fetchone()
 
     if user_data:
@@ -109,12 +108,15 @@ def registerDataProcess():
         return redirect(url_for('register'))
     else:
         # Insert the new user into the loginInfo table
-        cursor.execute('INSERT INTO Users (Username, Password) VALUES (?, ?)', (username, hashedPass))
+        cursor.execute('INSERT INTO Users (Username, Password, Contact, Email, Role) VALUES (?, ?, ?, ?, ?)', (username, hashedPass,contact,email,"Student"))
         conn.commit()
 
         cursor.execute('SELECT UserID FROM Users WHERE Username = ?', (username,))
         user_id = cursor.fetchone()[0]
-
+        print(type(user_id))
+        if user_id == 1:
+            cursor.execute('UPDATE Users SET Role = "Admin" WHERE UserID = 1')
+            conn.commit()
         conn.close()
         user = User(user_id, username)
         login_user(user)

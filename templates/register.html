@@ -31,38 +31,30 @@
     <form class="sign-in-form" method="post" action="/registerProcess" role="form">
       <!-- Email input -->
       <div class="form-outline mb-4">
-        <input type="text" id="loginName" class="form-control" name="regName" />
-        <label class="form-label" for="loginName">Email or username</label>
+        <input type="text" id="Username" data-fv-notempty-message="This field cannot be left blank." placeholder="Username" class="form-control" name="Username" />
+        <label class="form-label" for="Username">Username</label>
+      </div>
+      <div class="form-outline mb-4">
+        <input type="email" id="Email" data-fv-notempty-message="This field cannot be left blank." placeholder="Email"class="form-control" name="Email" />
+        <label class="form-label" for="Email">Email</label>
       </div>
 
       <!-- Password input -->
       <div class="form-outline mb-4">
-        <input type="password" id="loginPassword" class="form-control" name="regPassword"/>
-        <label class="form-label" for="loginPassword">Password</label>
+        <input type="password" id="Password" placeholder="Password" data-fv-notempty-message="This field cannot be left blank." class="form-control" name="Password"/>
+        <label class="form-label" for="Password">Password</label>
       </div>
       <div class="form-outline mb-4">
-        <input type="password" id="loginPassword" class="form-control" name="regPasswordRepeat"/>
-        <label class="form-label" for="loginPassword">Repeat Password</label>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-
-          <input type="text" id="loginPassword" class="form-control" name="firstName"/>
-          <label for="loginPassword">First Name</label>
-        </div>
-        <div class="form-group col-md-6">
-
-          <input type="text" id="loginPassword" class="form-control" name="lastName"/>
-          <label for="loginPassword">Last Name</label>
-        </div>
+        <input type="password" id="RepeatPassword" placeholder="Repeat Password" data-fv-notempty-message="This field cannot be left blank." class="form-control" name="RepeatPassword"/>
+        <label class="form-label" for="RepeatPassword">Repeat Password</label>
       </div>
       <div class="form-outline mb-4">
-        <input type="tel" id="phoneNumber" class="form-control" name="phoneNumber"/>
-        <label class="form-label" for="loginPassword">Mobile Number</label>
-      </div>
-      <div class="form-outline mb-4">
-        <input type="text" id="phoneNumber" class="form-control" name="address"/>
-        <label class="form-label" for="loginPassword">Address</label>
+              <input class="form-control" data-fv-field="data[User][mobile]"
+                     data-fv-notempty-message="This field cannot be left blank."
+                     data-fv-numeric="true" data-fv-numeric-message="Please enter valid phone numbers"
+                     data-fv-phone-country11="IN" id="userMobile" maxlength="14" name="mobileNumber"
+                     placeholder="Mobile No. " required="required" type="text">
+        <label class="form-label" for="userMobile">Mobile Number</label>
       </div>
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -97,6 +89,7 @@
       </div>
     </form>
   </div>
+</div>
 <!-- Pills content -->
 
 {% endblock %}
