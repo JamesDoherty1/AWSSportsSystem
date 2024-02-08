@@ -70,7 +70,10 @@ def clubpage(id):
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM Clubs WHERE clubid = ?', (id,))
     club_data = cursor.fetchone()
-    return render_template('clubpage.html', club_data=club_data)
+
+    cursor.execute('SELECT * FROM Users WHERE userid = ?', (club_data[4],))
+    owner_data = cursor.fetchone()
+    return render_template('clubpage.html', club_data=club_data, owner_data=owner_data)
 
 
 login_manager = LoginManager(app)
