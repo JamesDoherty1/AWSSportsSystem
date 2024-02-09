@@ -202,7 +202,17 @@ def utility_processor():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('/profile.html')
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT ClubID FROM ClubMemberships WHERE UserID = ?', (current_user.id,))
+    clubIDs = cursor.fetchall()
+    clubs = []
+    for clubID in clubIDs:
+        cursor.execute('SELECT * FROM Clubs WHERE ClubID = ?', clubID)
+        club = cursor.fetchone()
+        clubs.append(club)
+    print(clubs)
+    return render_template('/profile.html', clubs=clubs)
 
 @app.route('/joinClub', methods=["GET", "POST"])
 def joinClub():

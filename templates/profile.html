@@ -55,23 +55,17 @@
                 <div class="card-body">
                   <p class="mb-4"><span class="text-primary font-italic me-1"></span> Your clubs
                   </p>
+                  {% for club in clubs %}
                   <div class="card">
                   <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Fissure in Sandstone"/>
                   <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#!" class="btn btn-primary" data-mdb-ripple-init>Button</a>
+                    <h5 class="card-title">{{club[1]}}</h5>
+                    <p class="card-text">{{club[2]}}</p>
+                    <a href="{{url_for('explore')}}" class="btn btn-primary" data-mdb-ripple-init>Take me there!</a>
                   </div>
                 </div>
                   <br>
-                                    <div class="card">
-                  <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Fissure in Sandstone"/>
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#!" class="btn btn-primary" data-mdb-ripple-init>Button</a>
-                  </div>
-                </div>
+                  {% endfor %}
 
 
                 </div>
