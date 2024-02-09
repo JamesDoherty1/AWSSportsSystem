@@ -5,7 +5,6 @@ import sqlite3 as db
 import hashlib
 import jinja2
 
-
 def calculate_sha256(input_data):
     sha256_hash = hashlib.sha256(input_data.encode()).hexdigest()
     return sha256_hash
@@ -52,6 +51,53 @@ def admin():
     user_data = cursor.fetchall()
 
     return render_template('/admin.html', current_user=current_user, role=role_data[5], users_data=user_data)
+
+@app.route("/myclub")
+def myclub():
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    # fetch role of current user
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT Role FROM Users WHERE UserID = ?', (current_user.id,))
+    role_data = cursor.fetchone()
+
+    cursor.execute('SELECT * FROM Clubs WHERE CoordinatorID = ?', (current_user.id,))
+    club_owner = cursor.fetchone()
+
+    if role_data[0] == 'Coordinator' and club_owner:
+        cursor.execute('''
+                    SELECT u.UserID, u.Username, u.Contact, u.Email, c.RequestStatus
+                    FROM Users u 
+                    JOIN ClubMemberships c ON u.UserID = c.UserID 
+                    WHERE c.ClubID = ?
+                ''', (club_owner[0],))
+        club_users = cursor.fetchall()
+        return render_template('/myclubmanage.html', current_user=current_user, club_data=club_owner, club_users=club_users)
+    elif role_data[0] == 'Coordinator' and club_owner is None:
+        return render_template('/myclubcreate.html', current_user=current_user)
+
+@app.route("/updateClubMember", methods=['GET', 'POST'])
+def updateClubMember():
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM Users WHERE UserID = ?', (current_user.id,))
+    user_data = cursor.fetchone()
+
+    cursor.execute('SELECT CoordinatorID FROM Clubs WHERE ClubID = ?', (int(request.form['clubID']),))
+    club_owner_id = cursor.fetchone()
+    print(current_user.id, club_owner_id)
+    if user_data[5] == "Coordinator" and current_user.id == club_owner_id[0]:
+        approved = ''
+        if request.form['approval'] is not None and request.form['approval'] == 'on':
+            approved = 'Approved'
+            cursor.execute('UPDATE ClubMemberships SET RequestStatus = ? WHERE UserID = ? AND ClubID = ?',
+                           (approved, int(request.form['userID']), int(request.form['clubID'])))
+            conn.commit()
+
+        return redirect(url_for('myclub'))
+    else:
+        return redirect(url_for('home'))
 
 @app.route('/explore')
 def explore():
@@ -226,6 +272,28 @@ def joinClub():
         print("User added to club.")
 
     return redirect(url_for('profile'))
+
+@app.route('/createClub', methods=["GET", "POST"])
+def createClub():
+    ownerID = request.form['coordinatorID']
+    name = request.form['clubName']
+    desc = request.form['clubDesc']
+
+    # check if club exists under coordinator
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM Clubs WHERE CoordinatorID = ?', (ownerID,))
+    existsClub = cursor.fetchone()
+
+    if not existsClub:
+        cursor.execute('INSERT INTO Clubs (Name, Description, CoordinatorID, ValidityStatus) VALUES (?,?,?, \'Valid\')', (name,desc,ownerID,))
+        cursor.execute('SELECT clubID FROM Clubs WHERE CoordinatorID = ?', (ownerID,))
+        clubID = cursor.fetchone()[0]
+        cursor.execute('INSERT INTO ClubMemberships (UserID, ClubID, RequestStatus) VALUES (?,?, \'Approved\')', (ownerID,clubID))
+        conn.commit()
+
+    return redirect(url_for('myclub'))
+
 @login_required
 @app.route("/retrieveData/<int:id>", methods=['GET', 'POST'])
 def retrieve_user_data(id):
