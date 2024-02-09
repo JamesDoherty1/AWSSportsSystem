@@ -3,13 +3,29 @@
 {% block title %}Home - {{ super() }}{% endblock %}
 
 {% block content %}
-    <h2 class="ml-4">Explore Clubs & Societies</h2>
+    <style>
+        @keyframes fadeIn {
+            from{opacity: 0; left: 100px;}
+            to{opacity: 1; left: 0px;}
+        }
+
+        .title{
+            animation: fadeIn .7s;
+        }
+
+        .card{
+            opacity: 0;
+            animation: fadeIn .5s forwards .5s;
+        }
+    </style>
+
+    <h2 class="ml-4 mt-0 pt-0 title">Explore Clubs & Societies</h2>
 
     <div class="d-flex w-100 justify-content-center pt-3 g-5 flex-wrap">
         {% for club in club_data %}
         <div class="card w-25 m-3">
             <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Fissure in Sandstone"/>
-            <div class="card-body">
+            <div class="card-body test">
               <h5 class="card-title">{{club[1]}}</h5>
               <p class="card-text">{{club[2]}}</p>
               <a href="/explore/{{club[0]}}" class="btn btn-primary" data-mdb-ripple-init>View Club</a>
@@ -18,6 +34,5 @@
         {% endfor %}
         
     </div>
-    
 {% endblock %}
 

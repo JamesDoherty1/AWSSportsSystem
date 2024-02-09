@@ -3,13 +3,32 @@
 {% block title %}Home - {{ super() }}{% endblock %}
 
 {% block content %}
-    <h2>{{club_data[1]}}</h2>
-    <p>{{club_data[2]}}</p>
-
-    <p>Owned by: {{owner_data[1]}}</p>
-
-    <h3>Contact Club Owner</h3>
-    <p>Email: {{owner_data[4]}}</p>
-    <p>Phone: {{owner_data[3]}}</p>
+    <!-- Background image -->
+  <div
+    class="p-5 text-center bg-image w-100"
+    style="
+        background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp');
+        height: 400px;
+    "
+    >
+    <div class="mask w-100 h-100" style="background-color: rgba(0, 0, 0, 0.6);">
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="text-white">
+                <h1 class="mb-3">{{club_data[1]}}</h1>
+                <h4 class="mb-3">Club Coordinator: {{owner_data[1]}}</h4>
+                <a data-mdb-ripple-init class="btn btn-outline-light btn-lg" href="#!" role="button"
+                >{{club_data[2]}}</a
+                >
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Background image -->
+    <div class="m-4">
+        <h3>Contact Club Owner</h3>
+        <p>Email: {{owner_data[4]}}</p>
+        <p>Phone: {{owner_data[3]}}</p>
+    </div>
+    
 {% endblock %}
 
