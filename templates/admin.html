@@ -43,10 +43,14 @@
             {% endif %}
             <td>
                 <div class="form-outline mb-4">
-                    <select class="select form-control" id="select">
-                        <option value="1" {% if data[4] == "Coordinator" %}selected{% endif %}>Coordinator</option>
-                        <option value="2" {% if data[4] == "Student" %}selected{% endif %}>Student</option>
-                    </select>
+                    <form method="post" action="{{ url_for('updateMember') }}">
+                        <input type="hidden" name="userID" value="{{data[0]}}"/>
+                        <select class="select form-control" id="select" name="role">
+                            <option value="Coordinator" {% if data[4] == "Coordinator" %}selected{% endif %}>Coordinator</option>
+                            <option value="Student" {% if data[4] == "Student" %}selected{% endif %}>Student</option>
+                        </select>
+                        <input type="submit"/>
+                    </form>
                 </div>
             </td>
 
