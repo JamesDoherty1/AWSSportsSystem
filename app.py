@@ -5,7 +5,6 @@ import sqlite3 as db
 import hashlib
 import jinja2
 
-
 def calculate_sha256(input_data):
     sha256_hash = hashlib.sha256(input_data.encode()).hexdigest()
     return sha256_hash
@@ -55,6 +54,8 @@ def admin():
 
 @app.route("/myclub")
 def myclub():
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
     # fetch role of current user
     conn = db.connect('db/user_data.db')
     cursor = conn.cursor()
@@ -271,6 +272,28 @@ def joinClub():
         print("User added to club.")
 
     return redirect(url_for('profile'))
+
+@app.route('/createClub', methods=["GET", "POST"])
+def createClub():
+    ownerID = request.form['coordinatorID']
+    name = request.form['clubName']
+    desc = request.form['clubDesc']
+
+    # check if club exists under coordinator
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM Clubs WHERE CoordinatorID = ?', (ownerID,))
+    existsClub = cursor.fetchone()
+
+    if not existsClub:
+        cursor.execute('INSERT INTO Clubs (Name, Description, CoordinatorID, ValidityStatus) VALUES (?,?,?, \'Valid\')', (name,desc,ownerID,))
+        cursor.execute('SELECT clubID FROM Clubs WHERE CoordinatorID = ?', (ownerID,))
+        clubID = cursor.fetchone()[0]
+        cursor.execute('INSERT INTO ClubMemberships (UserID, ClubID, RequestStatus) VALUES (?,?, \'Approved\')', (ownerID,clubID))
+        conn.commit()
+
+    return redirect(url_for('myclub'))
+
 @login_required
 @app.route("/retrieveData/<int:id>", methods=['GET', 'POST'])
 def retrieve_user_data(id):
