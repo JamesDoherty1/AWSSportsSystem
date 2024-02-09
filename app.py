@@ -202,10 +202,6 @@ def utility_processor():
 @app.route('/profile')
 @login_required
 def profile():
-    conn = db.connect('db/user_data.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM Users WHERE UserID = ?', (current_user.id,))
-    currentUsrData = cursor.fetchone()
     return render_template('/profile.html')
 
 @app.route('/joinClub', methods=["GET", "POST"])
