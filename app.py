@@ -236,5 +236,30 @@ def retrieve_user_data(id):
     else:
         return 'Unauthorised Access'
 
+@login_required
+@app.route("/updateMember", methods=['GET', 'POST'])
+def updateMember():
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM Users WHERE UserID = ?', (current_user.id,))
+    user_data = cursor.fetchone()
+    if user_data[5] == "Admin":
+        print(request.form['userID'], request.form['role'])
+
+        approved = ''
+        if request.form['approval'] is not None and request.form['approval'] == 'on':
+            approved = 'Approved'
+            cursor.execute('UPDATE Users SET Role = ?, ApprovalStatus = ? WHERE UserID = ?',
+                           (request.form['role'], approved, int(request.form['userID'])))
+            conn.commit()
+        else:
+            cursor.execute('UPDATE Users SET Role = ? WHERE UserID = ?',
+                           (request.form['role'], int(request.form['userID'])))
+            conn.commit()
+
+        return redirect(url_for('admin'))
+    else:
+        return redirect(url_for('home'))
+
 if __name__ == '__main__':
     app.run(debug=True)
