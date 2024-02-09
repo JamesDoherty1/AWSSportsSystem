@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, flash
+from flask import Flask, render_template, redirect, url_for, request, flash, jsonify
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import sqlite3 as db
 # flask --app app.py --debug run
@@ -47,14 +47,11 @@ def admin():
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM Users WHERE UserID = ?', (current_user.id,))
     role_data = cursor.fetchone()
-
     # fetch users data
     cursor.execute('SELECT userid, username, email, contact, role, approvalstatus FROM Users WHERE Role != \'Admin\'')
     user_data = cursor.fetchall()
 
-    print(user_data)
-
-    return render_template('/admin.html', current_user=current_user, role=role_data[5], user_data=user_data)
+    return render_template('/admin.html', current_user=current_user, role=role_data[5], users_data=user_data)
 
 @app.route('/explore')
 def explore():
@@ -167,13 +164,40 @@ def logout():
     return redirect(url_for('home'))
 
 
-class USERDATA():
-    def __init__(self, first_name, last_name, phone_number, address) -> None:
-        self.first_name = first_name
-        self.last_name = last_name
-        self.phone_number = phone_number
-        self.address = address
+class USERDATA:
+    def __init__(self, username, mobile, email, role, accountStatus) -> None:
+        self.username = username
+        self.mobile = mobile
+        self.email = email
+        self.role = role
+        self.accountStatus = accountStatus
 
+
+@app.context_processor
+def utility_processor():
+    def current_user_data():
+        if current_user.is_authenticated:
+            conn = db.connect('db/user_data.db')
+            cursor = conn.cursor()
+            cursor.execute('SELECT * FROM Users WHERE UserID = ?', (current_user.id,))
+            currentUsrData = cursor.fetchone()
+            userData = USERDATA(
+                currentUsrData[1],
+                currentUsrData[3],
+                currentUsrData[4],
+                currentUsrData[5],
+                currentUsrData[6]
+            )
+            print(userData.role)
+            return userData
+        return USERDATA(
+                None,
+                None,
+                None,
+                None,
+                None
+            )
+    return dict(user_data=current_user_data())
 
 @app.route('/profile')
 @login_required
@@ -182,14 +206,54 @@ def profile():
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM Users WHERE UserID = ?', (current_user.id,))
     currentUsrData = cursor.fetchone()
-    userData = USERDATA(
-        currentUsrData[0],
-        currentUsrData[1],
-        currentUsrData[2],
-        currentUsrData[3],
-    )
-    return render_template('/profile.html', data=userData)
+    return render_template('/profile.html')
 
+@app.route('/joinClub', methods=["GET", "POST"])
+def joinClub():
+    # check if user is a member of the club already
+    clubid = request.form['club']
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM ClubMemberships WHERE UserID = ? AND ClubID = ?', (current_user.id, clubid))
+    exists = cursor.fetchone()
+
+    if exists:
+        print("User already member!")
+    else:
+        cursor.execute('INSERT INTO ClubMemberships (UserID,ClubID ) VALUES (?, ?)', (current_user.id,clubid))
+        conn.commit()
+
+        print("User added to club.")
+
+    return redirect(url_for('profile'))
+@login_required
+@app.route("/retrieveData/<int:id>", methods=['GET', 'POST'])
+def retrieve_user_data(id):
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM Users WHERE UserID = ?', (current_user.id,))
+    user_data = cursor.fetchone()
+    if user_data[5] == "Admin":
+        cursor.execute('SELECT * FROM Users WHERE UserID = ?', (id,))
+        user_data = cursor.fetchone()
+        return jsonify(user_data)
+    else:
+        return 'Unauthorised Access'
+
+@login_required
+@app.route("/updateMember", methods=['GET', 'POST'])
+def updateMember():
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM Users WHERE UserID = ?', (current_user.id,))
+    user_data = cursor.fetchone()
+    if user_data[5] == "Admin":
+        print(request.form['userID'], request.form['role'])
+        cursor.execute('UPDATE Users SET Role = ? WHERE UserID = ?', (request.form['role'],int(request.form['userID'])))
+        conn.commit()
+        return redirect(url_for('admin'))
+    else:
+        return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True)
