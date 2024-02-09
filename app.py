@@ -3,7 +3,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 import sqlite3 as db
 # flask --app app.py --debug run
 import hashlib
-
+import jinja2
 
 def calculate_sha256(input_data):
     sha256_hash = hashlib.sha256(input_data.encode()).hexdigest()
@@ -17,6 +17,14 @@ app.config['SECRET_KEY'] = '1d8f6b8beff5'
 @app.route("/contact-us")
 def contact():
     return render_template('/contact.html')
+
+@app.route("/events")
+def events():
+    return render_template('/events.html')
+
+@app.route("/event-register")
+def eventRegister():
+    return render_template('/events-register.html')
 
 
 @app.route("/about-us")
