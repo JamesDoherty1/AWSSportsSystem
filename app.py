@@ -208,7 +208,6 @@ def profile():
     currentUsrData = cursor.fetchone()
     return render_template('/profile.html')
 
-<<<<<<< HEAD
 @app.route('/joinClub', methods=["GET", "POST"])
 def joinClub():
     # check if user is a member of the club already
