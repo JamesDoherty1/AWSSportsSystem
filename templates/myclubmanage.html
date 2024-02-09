@@ -33,12 +33,14 @@
                         {% if data[4] != 'Pending' %}
                         <td>
                             <input type="hidden" name="userID" value="{{data[0]}}"/>
+                            <input type="hidden" name="clubID" value="{{club_data[0]}}"/>
                             <input type="hidden" name="approval" value="on"/>
                           <span class="badge badge-success rounded-pill d-inline">{{data[4]}}</span>
                         </td>
                         {% else %}
                         <td>
                             <input type="hidden" name="userID" value="{{data[0]}}"/>
+                            <input type="hidden" name="clubID" value="{{club_data[0]}}"/>
                             <input type="checkbox" name="approval"/>
                             <span class="badge badge-primary rounded-pill d-inline">{{data[4]}}</span>
                             <input type="submit" value="Update User"/>
