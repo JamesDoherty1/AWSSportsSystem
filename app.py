@@ -3,6 +3,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 import sqlite3 as db
 # flask --app app.py --debug run
 import hashlib
+import jinja2
 
 
 def calculate_sha256(input_data):
@@ -38,6 +39,41 @@ def login():
 @app.route('/register')
 def register():
     return render_template('/register.html')
+
+@app.route("/admin")
+def admin():
+    # fetch role of current user
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM Users WHERE UserID = ?', (current_user.id,))
+    role_data = cursor.fetchone()
+
+    # fetch users data
+    cursor.execute('SELECT userid, username, email, contact, role, approvalstatus FROM Users WHERE Role != \'Admin\'')
+    user_data = cursor.fetchall()
+
+    print(user_data)
+
+    return render_template('/admin.html', current_user=current_user, role=role_data[5], user_data=user_data)
+
+@app.route('/explore')
+def explore():
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM Clubs')
+    club_data = cursor.fetchall()
+    return render_template('/explore.html', club_data=club_data)
+
+@app.route('/explore/<int:id>')
+def clubpage(id):
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM Clubs WHERE clubid = ?', (id,))
+    club_data = cursor.fetchone()
+
+    cursor.execute('SELECT * FROM Users WHERE userid = ?', (club_data[4],))
+    owner_data = cursor.fetchone()
+    return render_template('clubpage.html', club_data=club_data, owner_data=owner_data)
 
 
 login_manager = LoginManager(app)
