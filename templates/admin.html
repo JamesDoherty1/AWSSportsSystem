@@ -32,27 +32,30 @@
               <p class="fw-normal mb-1">{{data[2]}}</p>
               <p class="text-muted mb-0">{{data[3]}}</p>
             </td>
+              <form method="post" action="{{ url_for('updateMember') }}">
             {% if data[5] != 'Pending' %}
             <td>
+                <input type="hidden" name="approval" value="on"/>
               <span class="badge badge-success rounded-pill d-inline">{{data[5]}}</span>
             </td>
             {% else %}
             <td>
+                <input type="checkbox" name="approval"/>
                 <span class="badge badge-primary rounded-pill d-inline">{{data[5]}}</span>
             </td>
             {% endif %}
             <td>
                 <div class="form-outline mb-4">
-                    <form method="post" action="{{ url_for('updateMember') }}">
+
                         <input type="hidden" name="userID" value="{{data[0]}}"/>
                         <select class="select form-control" id="select" name="role">
                             <option value="Coordinator" {% if data[4] == "Coordinator" %}selected{% endif %}>Coordinator</option>
                             <option value="Student" {% if data[4] == "Student" %}selected{% endif %}>Student</option>
                         </select>
-                        <input type="submit"/>
-                    </form>
+                        <input type="submit" value="Update User"/>
                 </div>
             </td>
+                  </form>
 
           </tr>
           {% endfor %}
