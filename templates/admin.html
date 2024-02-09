@@ -3,6 +3,9 @@
 {% block title %}Home - {{ super() }}{% endblock %}
 
 {% block content %}
+
+
+
     <div id="content">
         {% if role == 'Admin' %}
         <table class="table align-middle mb-0 bg-white">
@@ -12,11 +15,10 @@
                 <th>Contact</th>
                 <th>Approval Status</th>
                 <th>Role</th>
-                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
-        {% for data in user_data %}
+        {% for data in users_data %}
           <tr>
             <td>
               <div class="d-flex align-items-center">
@@ -39,12 +41,15 @@
                 <span class="badge badge-primary rounded-pill d-inline">{{data[5]}}</span>
             </td>
             {% endif %}
-            <td>{{data[4]}}</td>
             <td>
-              <button type="button" class="btn btn-link btn-sm btn-rounded">
-                Edit
-              </button>
+                <div class="form-outline mb-4">
+                    <select class="select form-control" id="select">
+                        <option value="1" {% if data[4] == "Coordinator" %}selected{% endif %}>Coordinator</option>
+                        <option value="2" {% if data[4] == "Student" %}selected{% endif %}>Student</option>
+                    </select>
+                </div>
             </td>
+
           </tr>
           {% endfor %}
         </tbody>
@@ -52,6 +57,10 @@
         {% else %}
         <p>{{current_user.username}} is not authorized to access this page!</p>
         {% endif %}
+
     </div>
+
+
+
 {% endblock %}
 
