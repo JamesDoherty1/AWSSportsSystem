@@ -190,6 +190,24 @@ def profile():
     )
     return render_template('/profile.html', data=userData)
 
+@app.route('/joinClub', methods=["GET", "POST"])
+def joinClub():
+    # check if user is a member of the club already
+    clubid = request.form['club']
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM ClubMemberships WHERE UserID = ? AND ClubID = ?', (current_user.id, clubid))
+    exists = cursor.fetchone()
+
+    if exists:
+        print("User already member!")
+    else:
+        cursor.execute('INSERT INTO ClubMemberships (UserID,ClubID ) VALUES (?, ?)', (current_user.id,clubid))
+        conn.commit()
+
+        print("User added to club.")
+
+    return redirect(url_for('profile'))
 
 if __name__ == '__main__':
     app.run(debug=True)
