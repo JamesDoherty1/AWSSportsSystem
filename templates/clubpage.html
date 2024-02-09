@@ -4,8 +4,21 @@
 
 {% block content %}
     <!-- Background image -->
+    <style>
+        @keyframes fadeIn {
+            from{opacity: 0; top: -75px;}
+            to{opacity: 1; top: 0px;}
+        }
+
+        .imgcontainer{
+            position: relative;
+            animation: fadeIn .4s;
+        }
+
+    </style>
+
   <div
-    class="p-5 text-center bg-image w-100"
+    class="p-5 text-center bg-image w-100 imgcontainer"
     style="
         background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp');
         height: 400px;

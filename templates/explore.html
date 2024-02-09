@@ -9,13 +9,20 @@
             to{opacity: 1; left: 0px;}
         }
 
+        @keyframes fadeInCard {
+            from{opacity: 0; top: -75px;}
+            to{opacity: 1; top: 0px;}
+        }
+
         .title{
+            position: relative;
             animation: fadeIn .7s;
         }
 
         .card{
+            position: relative;
             opacity: 0;
-            animation: fadeIn .5s forwards .5s;
+            animation: fadeInCard .5s forwards .5s;
         }
     </style>
 
