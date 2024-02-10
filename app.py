@@ -250,9 +250,15 @@ def utility_processor():
 def profile():
     conn = db.connect('db/user_data.db')
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM Users WHERE UserID = ?', (current_user.id,))
-    currentUsrData = cursor.fetchone()
-    return render_template('/profile.html')
+    cursor.execute('SELECT ClubID FROM ClubMemberships WHERE UserID = ?', (current_user.id,))
+    clubIDs = cursor.fetchall()
+    clubs = []
+    for clubID in clubIDs:
+        cursor.execute('SELECT * FROM Clubs WHERE ClubID = ?', clubID)
+        club = cursor.fetchone()
+        clubs.append(club)
+    print(clubs)
+    return render_template('/profile.html', clubs=clubs)
 
 @app.route('/joinClub', methods=["GET", "POST"])
 def joinClub():
