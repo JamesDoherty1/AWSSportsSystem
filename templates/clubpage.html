@@ -32,6 +32,13 @@
                 <form action="{{ url_for('joinClub') }}" method="post">
                     <input type="hidden" name="club" value="{{club_data[0]}}"/>
                     <input type="submit" data-mdb-ripple-init class="btn btn-outline-light btn-lg" value="Join Club" role="button"/>
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                                {% for category, message in messages %}
+                                    <h7 class="{{ category }} row mb-4 justify-content-center text-danger">{{ message }}</h7>
+                                {% endfor %}
+                        {% endif %}
+                    {% endwith %}
                 </form>
             </div>
         </div>

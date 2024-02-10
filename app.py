@@ -260,17 +260,19 @@ def joinClub():
     clubid = request.form['club']
     conn = db.connect('db/user_data.db')
     cursor = conn.cursor()
+    cursor.execute('SELECT * FROM ClubMemberships WHERE UserID = ?', (current_user.id,))
+    all_memberships = cursor.fetchall()
+    if len(all_memberships) >= 3:
+        flash('Unable to join, there is a limit of 3 club memberships per user', 'error')
+        return redirect(url_for('clubpage', id=clubid))
     cursor.execute('SELECT * FROM ClubMemberships WHERE UserID = ? AND ClubID = ?', (current_user.id, clubid))
     exists = cursor.fetchone()
-
     if exists:
-        print("User already member!")
+        flash('Unable to join, you are already a member!', 'error')
+        return redirect(url_for('clubpage', id=clubid))
     else:
         cursor.execute('INSERT INTO ClubMemberships (UserID,ClubID ) VALUES (?, ?)', (current_user.id,clubid))
         conn.commit()
-
-        print("User added to club.")
-
     return redirect(url_for('profile'))
 
 @app.route('/createClub', methods=["GET", "POST"])
