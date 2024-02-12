@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Home - {{ super() }}{% endblock %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events Page</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding-top: 20px;
+        }
+
+        .card {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .card-img-top {
+            width: 100%;
+            height: auto;
+            max-height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Fissure in Sandstone"/>
+            <div class="card-body">
+                <h5 class="card-title">UL OPC</h5>
+                <p class="card-text">Beginner rock climbing - Sports arena - 6-10pm next Wednesday.</p>
+                <a href="#!" class="btn btn-primary" data-mdb-ripple-init>Book</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Fissure in Sandstone"/>
+            <div class="card-body">
+                <h5 class="card-title">UL Wolves</h5>
+                <p class="card-text"> Freshers 1 match - Maguires 4G - Thursday 6pm.</p>
+                <a href="#!" class="btn btn-primary" data-mdb-ripple-init>Book</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Fissure in Sandstone"/>
+            <div class="card-body">
+                <h5 class="card-title">Drama Society</h5>
+                <p class="card-text">Rehearsel - Concert hall - 3pm Friday.</p>
+                <a href="#!" class="btn btn-primary" data-mdb-ripple-init>Book</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Fissure in Sandstone"/>
+            <div class="card-body">
+                <h5 class="card-title">UL Photo society</h5>
+                <p class="card-text">Taking photos at UL Wolves freshers 1 hurling game - Maguires 4G -  Wednesday 7pm.</p>
+                <a href="#!" class="btn btn-primary" data-mdb-ripple-init>Book</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Fissure in Sandstone"/>
+            <div class="card-body">
+                <h5 class="card-title">UL Motor sports</h5>
+                <p class="card-text">Go karting - Arena 5 - 6pm Thursday evening.</p>
+                <a href="#!" class="btn btn-primary" data-mdb-ripple-init>Book</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}
