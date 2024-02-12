@@ -5,6 +5,7 @@ import sqlite3 as db
 import hashlib
 import jinja2
 
+
 def calculate_sha256(input_data):
     sha256_hash = hashlib.sha256(input_data.encode()).hexdigest()
     return sha256_hash
@@ -39,6 +40,7 @@ def login():
 def register():
     return render_template('/register.html')
 
+
 @app.route("/admin")
 def admin():
     # fetch role of current user
@@ -52,10 +54,9 @@ def admin():
 
     return render_template('/admin.html', current_user=current_user, role=role_data[5], users_data=user_data)
 
+
 @app.route("/myclub")
 def myclub():
-    conn = db.connect('db/user_data.db')
-    cursor = conn.cursor()
     # fetch role of current user
     conn = db.connect('db/user_data.db')
     cursor = conn.cursor()
@@ -73,9 +74,11 @@ def myclub():
                     WHERE c.ClubID = ?
                 ''', (club_owner[0],))
         club_users = cursor.fetchall()
-        return render_template('/myclubmanage.html', current_user=current_user, club_data=club_owner, club_users=club_users)
+        return render_template('/myclubmanage.html', current_user=current_user, club_data=club_owner,
+                               club_users=club_users)
     elif role_data[0] == 'Coordinator' and club_owner is None:
         return render_template('/myclubcreate.html', current_user=current_user)
+
 
 @app.route("/updateClubMember", methods=['GET', 'POST'])
 def updateClubMember():
@@ -99,6 +102,7 @@ def updateClubMember():
     else:
         return redirect(url_for('home'))
 
+
 @app.route('/explore')
 def explore():
     conn = db.connect('db/user_data.db')
@@ -106,6 +110,7 @@ def explore():
     cursor.execute('SELECT * FROM Clubs')
     club_data = cursor.fetchall()
     return render_template('/explore.html', club_data=club_data)
+
 
 @app.route('/explore/<int:id>')
 def clubpage(id):
@@ -167,7 +172,7 @@ def registerDataProcess():
     hashedPass = calculate_sha256(password)
     email = request.form.get('Email')
     contact = request.form.get('mobileNumber')
-    print(username,password,hashedPass,email,contact)
+    print(username, password, hashedPass, email, contact)
 
     password_repeat = request.form.get('RepeatPassword')
 
@@ -187,7 +192,8 @@ def registerDataProcess():
         return redirect(url_for('register'))
     else:
         # Insert the new user into the loginInfo table
-        cursor.execute('INSERT INTO Users (Username, Password, Contact, Email, Role) VALUES (?, ?, ?, ?, ?)', (username, hashedPass,contact,email,"Student"))
+        cursor.execute('INSERT INTO Users (Username, Password, Contact, Email, Role) VALUES (?, ?, ?, ?, ?)',
+                       (username, hashedPass, contact, email, "Student"))
         conn.commit()
 
         cursor.execute('SELECT UserID FROM Users WHERE Username = ?', (username,))
@@ -237,13 +243,15 @@ def utility_processor():
             print(userData.role)
             return userData
         return USERDATA(
-                None,
-                None,
-                None,
-                None,
-                None
-            )
+            None,
+            None,
+            None,
+            None,
+            None
+        )
+
     return dict(user_data=current_user_data())
+
 
 @app.route('/profile')
 @login_required
@@ -259,6 +267,7 @@ def profile():
         clubs.append(club)
     print(clubs)
     return render_template('/profile.html', clubs=clubs)
+
 
 @app.route('/joinClub', methods=["GET", "POST"])
 def joinClub():
@@ -277,9 +286,10 @@ def joinClub():
         flash('Unable to join, you are already a member!', 'error')
         return redirect(url_for('clubpage', id=clubid))
     else:
-        cursor.execute('INSERT INTO ClubMemberships (UserID,ClubID ) VALUES (?, ?)', (current_user.id,clubid))
+        cursor.execute('INSERT INTO ClubMemberships (UserID,ClubID ) VALUES (?, ?)', (current_user.id, clubid))
         conn.commit()
     return redirect(url_for('profile'))
+
 
 @app.route('/createClub', methods=["GET", "POST"])
 def createClub():
@@ -294,13 +304,16 @@ def createClub():
     existsClub = cursor.fetchone()
 
     if not existsClub:
-        cursor.execute('INSERT INTO Clubs (Name, Description, CoordinatorID, ValidityStatus) VALUES (?,?,?, \'Valid\')', (name,desc,ownerID,))
+        cursor.execute('INSERT INTO Clubs (Name, Description, CoordinatorID, ValidityStatus) VALUES (?,?,?, \'Valid\')',
+                       (name, desc, ownerID,))
         cursor.execute('SELECT clubID FROM Clubs WHERE CoordinatorID = ?', (ownerID,))
         clubID = cursor.fetchone()[0]
-        cursor.execute('INSERT INTO ClubMemberships (UserID, ClubID, RequestStatus) VALUES (?,?, \'Approved\')', (ownerID,clubID))
+        cursor.execute('INSERT INTO ClubMemberships (UserID, ClubID, RequestStatus) VALUES (?,?, \'Approved\')',
+                       (ownerID, clubID))
         conn.commit()
 
     return redirect(url_for('myclub'))
+
 
 @login_required
 @app.route("/retrieveData/<int:id>", methods=['GET', 'POST'])
@@ -315,6 +328,7 @@ def retrieve_user_data(id):
         return jsonify(user_data)
     else:
         return 'Unauthorised Access'
+
 
 @login_required
 @app.route("/updateMember", methods=['GET', 'POST'])
@@ -340,6 +354,7 @@ def updateMember():
         return redirect(url_for('admin'))
     else:
         return redirect(url_for('home'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
