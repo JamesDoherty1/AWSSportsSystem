@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c25ba347-7202-429c-b14f-7549f144ccfa" name="Changes" comment="Reformat other pages into their own files">
+    <list default="true" id="c25ba347-7202-429c-b14f-7549f144ccfa" name="Changes" comment="added better quality photo of UL Sport arena">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_02_2024_16_52__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_02_2024_16_52__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/user_data.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/user_data.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/permissionpages.py" beforeDir="false" afterPath="$PROJECT_DIR$/permissionpages.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +26,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="5abcc98925ec8625d6990829cd2c5059a76e7393" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -48,7 +50,7 @@
     "Python.permissionpages.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "organise-files",
+    "git-widget-placeholder": "Admin-page",
     "last_opened_file_path": "C:/Users/Niall/Desktop/ISE/projects/flaskClubManagement",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PythonContentEntriesConfigurable"
   }
@@ -101,7 +103,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707736708293</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added better quality photo of UL Sport arena">
+      <option name="closed" value="true" />
+      <created>1707753967752</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1707753967752</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -109,6 +119,7 @@
     <MESSAGE value="Limited users to only 3 club memberships" />
     <MESSAGE value="Reformat permission pages and update files into different files" />
     <MESSAGE value="Reformat other pages into their own files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Reformat other pages into their own files" />
+    <MESSAGE value="added better quality photo of UL Sport arena" />
+    <option name="LAST_COMMIT_MESSAGE" value="added better quality photo of UL Sport arena" />
   </component>
 </project>
