@@ -39,7 +39,7 @@ def admin():
         cursor.execute('SELECT * FROM Users WHERE UserID = ?', (current_user.id,))
         role_data = cursor.fetchone()
         # fetch users data
-        cursor.execute('SELECT userid, username, email, contact, role, approvalstatus FROM Users WHERE Role != \'Admin\'')
+        cursor.execute('SELECT userid, username, email, contact, role, CreatedAt,approvalstatus FROM Users WHERE Role != \'Admin\'')
         user_data = cursor.fetchall()
 
         return render_template('/admin.html', current_user=current_user, role=role_data[5], users_data=user_data)
