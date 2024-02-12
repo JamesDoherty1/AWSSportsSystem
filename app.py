@@ -3,6 +3,8 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 import sqlite3 as db
 # flask --app app.py --debug run
 import hashlib
+import clubs
+import static
 import updates, permissionpages
 import jinja2
 
@@ -14,54 +16,6 @@ def calculate_sha256(input_data):
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '1d8f6b8beff5'
-
-
-@app.route("/contact-us")
-def contact():
-    return render_template('/contact.html')
-
-
-@app.route("/about-us")
-def about():
-    return render_template('/about.html')
-
-
-@app.route("/")
-@app.route("/home")
-def home():
-    return render_template('/home.html')
-
-
-@app.route("/login")
-def login():
-    return render_template('/login.html')
-
-
-@app.route('/register')
-def register():
-    return render_template('/register.html')
-
-
-@app.route('/explore')
-def explore():
-    conn = db.connect('db/user_data.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM Clubs')
-    club_data = cursor.fetchall()
-    return render_template('/explore.html', club_data=club_data)
-
-
-@app.route('/explore/<int:id>')
-def clubpage(id):
-    conn = db.connect('db/user_data.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM Clubs WHERE clubid = ?', (id,))
-    club_data = cursor.fetchone()
-
-    cursor.execute('SELECT * FROM Users WHERE userid = ?', (club_data[4],))
-    owner_data = cursor.fetchone()
-    return render_template('clubpage.html', club_data=club_data, owner_data=owner_data)
-
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -207,53 +161,6 @@ def profile():
     print(clubs)
     return render_template('/profile.html', clubs=clubs)
 
-
-@app.route('/joinClub', methods=["GET", "POST"])
-def joinClub():
-    # check if user is a member of the club already
-    clubid = request.form['club']
-    conn = db.connect('db/user_data.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM ClubMemberships WHERE UserID = ?', (current_user.id,))
-    all_memberships = cursor.fetchall()
-    if len(all_memberships) >= 3:
-        flash('Unable to join, there is a limit of 3 club memberships per user', 'error')
-        return redirect(url_for('clubpage', id=clubid))
-    cursor.execute('SELECT * FROM ClubMemberships WHERE UserID = ? AND ClubID = ?', (current_user.id, clubid))
-    exists = cursor.fetchone()
-    if exists:
-        flash('Unable to join, you are already a member!', 'error')
-        return redirect(url_for('clubpage', id=clubid))
-    else:
-        cursor.execute('INSERT INTO ClubMemberships (UserID,ClubID ) VALUES (?, ?)', (current_user.id, clubid))
-        conn.commit()
-    return redirect(url_for('profile'))
-
-
-@app.route('/createClub', methods=["GET", "POST"])
-def createClub():
-    ownerID = request.form['coordinatorID']
-    name = request.form['clubName']
-    desc = request.form['clubDesc']
-
-    # check if club exists under coordinator
-    conn = db.connect('db/user_data.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM Clubs WHERE CoordinatorID = ?', (ownerID,))
-    existsClub = cursor.fetchone()
-
-    if not existsClub:
-        cursor.execute('INSERT INTO Clubs (Name, Description, CoordinatorID, ValidityStatus) VALUES (?,?,?, \'Valid\')',
-                       (name, desc, ownerID,))
-        cursor.execute('SELECT clubID FROM Clubs WHERE CoordinatorID = ?', (ownerID,))
-        clubID = cursor.fetchone()[0]
-        cursor.execute('INSERT INTO ClubMemberships (UserID, ClubID, RequestStatus) VALUES (?,?, \'Approved\')',
-                       (ownerID, clubID))
-        conn.commit()
-
-    return redirect(url_for('myclub'))
-
-
 @login_required
 @app.route("/retrieveData/<int:id>", methods=['GET', 'POST'])
 def retrieve_user_data(id):
@@ -269,36 +176,21 @@ def retrieve_user_data(id):
         return 'Unauthorised Access'
 
 
-@login_required
-@app.route("/updateMember", methods=['GET', 'POST'])
-def updateMember():
-    conn = db.connect('db/user_data.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM Users WHERE UserID = ?', (current_user.id,))
-    user_data = cursor.fetchone()
-    if user_data[5] == "Admin":
-        print(request.form['userID'], request.form['role'])
-
-        approved = ''
-        if request.form['approval'] is not None and request.form['approval'] == 'on':
-            approved = 'Approved'
-            cursor.execute('UPDATE Users SET Role = ?, ApprovalStatus = ? WHERE UserID = ?',
-                           (request.form['role'], approved, int(request.form['userID'])))
-            conn.commit()
-        else:
-            cursor.execute('UPDATE Users SET Role = ? WHERE UserID = ?',
-                           (request.form['role'], int(request.form['userID'])))
-            conn.commit()
-
-        return redirect(url_for('admin'))
-    else:
-        return redirect(url_for('home'))
-
-
 # Import other files
 app.add_url_rule('/myclub', view_func=permissionpages.myclub)
 app.add_url_rule('/admin', view_func=permissionpages.admin)
-app.add_url_rule('/updateClubMember', view_func=updates.updateClubMember)
+app.add_url_rule('/updateClubMember', methods=['GET', 'POST'], view_func=updates.updateClubMember)
+app.add_url_rule('/updateMember', methods=['GET', 'POST'], view_func=updates.updateMember)
+app.add_url_rule('/joinClub', methods=['GET', 'POST'], view_func=clubs.joinClub)
+app.add_url_rule('/createClub', methods=['GET', 'POST'], view_func=clubs.createClub)
+app.add_url_rule('/explore/<int:id>', view_func=clubs.clubpage)
+app.add_url_rule('/explore', view_func=clubs.explore)
+app.add_url_rule('/', view_func=static.home)
+app.add_url_rule('/home', view_func=static.home)
+app.add_url_rule('/contact', view_func=static.contact)
+app.add_url_rule('/about', view_func=static.about)
+app.add_url_rule('/login', view_func=static.login)
+app.add_url_rule('/register', view_func=static.register)
 
 if __name__ == '__main__':
     app.run(debug=True)
