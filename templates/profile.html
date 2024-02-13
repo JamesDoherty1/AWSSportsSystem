@@ -52,16 +52,16 @@
           <div class="row">
             <div class="col-md-6">
               <div class="card mb-4 mb-md-0">
-                <div class="card-body">
+                <div class="card-body" style="overflow: auto; height: 300px;">
                   <p class="mb-4"><span class="text-primary font-italic me-1"></span> Your clubs
                   </p>
+
                   {% for club in clubs %}
                   <div class="card">
-                  <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Fissure in Sandstone"/>
                   <div class="card-body">
-                    <h5 class="card-title">{{club[1]}}</h5>
+                    <a class="card-title" href="{{url_for('explore')}}">{{club[1]}}</a>
                     <p class="card-text">{{club[2]}}</p>
-                    <a href="{{url_for('explore')}}" class="btn btn-primary" data-mdb-ripple-init>Take me there!</a>
+
                   </div>
                 </div>
                   <br>
