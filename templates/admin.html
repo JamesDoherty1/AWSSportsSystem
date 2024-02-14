@@ -200,32 +200,30 @@ table.table .avatar {
                         <td>{{data[1]}}</td>
                         <td>{{data[2]}}</td>
                         <td>{{data[3]}}</td>
-                        <form method="post" action="{{ url_for('updateMember') }}" name="UpdateUser" id="updateForm">
-                        <td>
-                                    <input type="hidden" name="userID" value="{{data[0]}}"/>
-                                    <select class="select form-control" id="select" name="role">
-                                        <option value="Coordinator" {% if data[4] == "Coordinator" %}selected{% endif %}>Coordinator</option>
-                                        <option value="Student" {% if data[4] == "Student" %}selected{% endif %}>Student</option>
-                                    </select>
+                        <form method="post" action="{{ url_for('updateMember') }}">
+                            <td>
+                                        <input type="hidden" name="userID" value="{{data[0]}}"/>
+                                        <select class="select form-control" id="select" name="role">
+                                            <option value="Coordinator" {% if data[4] == "Coordinator" %}selected{% endif %}>Coordinator</option>
+                                            <option value="Student" {% if data[4] == "Student" %}selected{% endif %}>Student</option>
+                                        </select>
+                            </td>
 
+                            {% if data[6] != "Pending" %}
+                                <td><input type="hidden" name="approval" value="on"/><span class="status text-success">&bull;</span> {{data[6]}}</td>
+                            {% else %}
+                                <td><input type="checkbox" name="approval"/><span class="status text-danger">&bull;</span> {{data[6]}}</td>
+                            {% endif %}
 
-                        </td>
-
-                        {% if data[6] != "Pending" %}
-                            <td><input type="hidden" name="approval" value="on"/><span class="status text-success">&bull;</span> {{data[6]}}</td>
-                        {% else %}
-                            <td><input type="checkbox" name="approval"/><span class="status text-danger">&bull;</span> {{data[6]}}</td>
-                        {% endif %}
-
-                        <td>{{data[5]}}</td>
-                        <td>
-                              <a href="#" class="settings" title="Update User" data-toggle="tooltip" onclick="submitForm()">
-                                <i class="material-icons">&#xE5CA;</i>
-                              </a>
-                            <!--<a href="#" class="settings" title="Update User" data-toggle="tooltip"><i class="material-icons">&#xE5CA;</i></a>-->
-                            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-                        </td>
-                            </form>
+                            <td>{{data[5]}}</td>
+                            <td>
+                                  <a href="#" class="settings" title="Update User" data-toggle="tooltip" onclick="submitForm()">
+                                    <i class="material-icons">&#xE5CA;</i>
+                                  </a>
+                                <!--<a href="#" class="settings" title="Update User" data-toggle="tooltip"><i class="material-icons">&#xE5CA;</i></a>-->
+                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                            </td>
+                        </form>
                     </tr>
                     {% endfor %}
                 </tbody>
