@@ -217,9 +217,9 @@ table.table .avatar {
 
                             <td>{{data[5]}}</td>
                             <td>
-                                  <a href="#" class="settings" title="Update User" data-toggle="tooltip" onclick="submitForm()">
+                                  <button type="submit" style="background: transparent; border: 0; padding: 0; color: blue;" class="update-user" title="Update User" data-toggle="tooltip">
                                     <i class="material-icons">&#xE5CA;</i>
-                                  </a>
+                                  </button>
                                 <!--<a href="#" class="settings" title="Update User" data-toggle="tooltip"><i class="material-icons">&#xE5CA;</i></a>-->
                                 <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
                             </td>
@@ -243,11 +243,7 @@ table.table .avatar {
         </div>
     </div>
 </div>
-<script>
-  function submitForm() {
-    document.getElementById("updateForm").submit();
-  }
-</script>
+
         {% else %}
         <p>{{current_user.username}} is not authorized to access this page!</p>
         {% endif %}
