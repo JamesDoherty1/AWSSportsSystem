@@ -47,7 +47,7 @@ def registerDataProcess():
     conn = db.connect('db/user_data.db')
     cursor = conn.cursor()
 
-    cursor.execute('SELECT * FROM Users WHERE Username = ?', (username,))
+    cursor.execute('SELECT Username FROM Users WHERE Username = ?', (username,))
     user_data = cursor.fetchone()
 
     if user_data:
@@ -107,9 +107,9 @@ def profile():
 def retrieve_user_data(id):
     conn = db.connect('db/user_data.db')
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM Users WHERE UserID = ?', (current_user.id,))
+    cursor.execute('SELECT Role FROM Users WHERE UserID = ?', (current_user.id,))
     user_data = cursor.fetchone()
-    if user_data[5] == "Admin":
+    if user_data[0] == "Admin":
         cursor.execute('SELECT * FROM Users WHERE UserID = ?', (id,))
         user_data = cursor.fetchone()
         return jsonify(user_data)

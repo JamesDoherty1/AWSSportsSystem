@@ -7,13 +7,13 @@ from flask_login import current_user
 def updateClubMember():
     conn = db.connect('db/user_data.db')
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM Users WHERE UserID = ?', (current_user.id,))
+    cursor.execute('SELECT Role FROM Users WHERE UserID = ?', (current_user.id,))
     user_data = cursor.fetchone()
 
     cursor.execute('SELECT CoordinatorID FROM Clubs WHERE ClubID = ?', (int(request.form['clubID']),))
     club_owner_id = cursor.fetchone()
     print(current_user.id, club_owner_id)
-    if user_data[5] == "Coordinator" and current_user.id == club_owner_id[0]:
+    if user_data[0] == "Coordinator" and current_user.id == club_owner_id[0]:
         approved = ''
         if request.form['approval'] is not None and request.form['approval'] == 'on':
             approved = 'Approved'
@@ -28,9 +28,9 @@ def updateClubMember():
 def updateMember():
     conn = db.connect('db/user_data.db')
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM Users WHERE UserID = ?', (current_user.id,))
+    cursor.execute('SELECT Role FROM Users WHERE UserID = ?', (current_user.id,))
     user_data = cursor.fetchone()
-    if user_data[5] == "Admin":
+    if user_data[0] == "Admin":
         print(request.form['userID'], request.form['role'])
 
         approved = ''
