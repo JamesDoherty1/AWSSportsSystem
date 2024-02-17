@@ -20,8 +20,8 @@ CREATE TABLE IF NOT EXISTS Users (
 );
 '''
 
-cursor.execute(create_users_table_query)
-conn.commit()
+#cursor.execute(create_users_table_query)
+#conn.commit()
 
 
 
@@ -39,8 +39,8 @@ CREATE TABLE IF NOT EXISTS ClubMemberships (
 );
 '''
 
-cursor.execute(create_club_memberships_table_query)
-conn.commit()
+#cursor.execute(create_club_memberships_table_query)
+#conn.commit()
 
 
 # Create Clubs table
@@ -57,8 +57,8 @@ CREATE TABLE IF NOT EXISTS Clubs (
 );
 '''
 
-cursor.execute(create_clubs_table_query)
-conn.commit()
+#cursor.execute(create_clubs_table_query)
+#conn.commit()
 
 # Create Events table
 create_events_table_query = '''
@@ -76,8 +76,8 @@ CREATE TABLE IF NOT EXISTS Events (
 );
 '''
 
-cursor.execute(create_events_table_query)
-conn.commit()
+#cursor.execute(create_events_table_query)
+#conn.commit()
 
 # Create EventRegistrations table
 create_event_registrations_table_query = '''
@@ -93,15 +93,16 @@ CREATE TABLE IF NOT EXISTS EventRegistrations (
 );
 '''
 
-cursor.execute(create_event_registrations_table_query)
-conn.commit()
+#cursor.execute(create_event_registrations_table_query)
+#conn.commit()
 
 # Insert sample user data
-insert_user_query = '''
-INSERT INTO Users (Username, Password, Contact, Email, Role, ApprovalStatus)
-VALUES (?, ?, ?, ?, ?, ?)
+insert_club_query = '''
+INSERT INTO Clubs (Name, Description, ValidityStatus, CoordinatorID)
+VALUES (?, ?, ?, ?)
 '''
-
+cursor.execute(insert_club_query, ("Outdoor Pursuits", "Explore the outdoors", "Valid", 5))
+conn.commit()
 
 # Close the cursor and connection
 cursor.close()
