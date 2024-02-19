@@ -94,6 +94,24 @@
         </div>
     </div>
 
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmationModalLabel">Booking Confirmation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p id="confirmationMessage"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -141,55 +159,32 @@
 <!-- Bootstrap JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 <script>
-    // JavaScript to handle event submission and display saved events
+    // JavaScript to handle event submission and booking existing events
     document.addEventListener('DOMContentLoaded', function () {
         const eventForm = document.getElementById('eventForm');
         const savedEventsContainer = document.getElementById('savedEvents');
 
-        // Function to retrieve saved events from localStorage
-        function getSavedEvents() {
-            const savedEvents = JSON.parse(localStorage.getItem('events')) || [];
-            return savedEvents;
+        // Function to handle booking an existing event
+        function handleBooking(eventCard) {
+            const eventName = eventCard.querySelector('.event-card-title').innerText;
+            const confirmationMessage = `Booking confirmed for ${eventName}.`;
+
+            // Display confirmation message in modal
+            const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+            const confirmationMessageElement = document.getElementById('confirmationMessage');
+            confirmationMessageElement.textContent = confirmationMessage;
+            confirmationModal.show();
         }
 
-        // Function to save events to localStorage
-        function saveEvents(events) {
-            localStorage.setItem('events', JSON.stringify(events));
-        }
-
-        // Function to display saved events
-        function displaySavedEvents() {
-            const savedEvents = getSavedEvents();
-
-            savedEvents.forEach(event => {
-                const eventHTML = `
-                    <div class="event-card">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Event Image">
-                        <div class="event-card-content">
-                            <h5 class="event-card-title">${event.clubName}</h5>
-                            <p class="event-card-text">${event.information} - ${event.eventDate} ${event.eventTime}</p>
-                            <button type="button" class="btn btn-primary book-btn">Book</button>
-                        </div>
-                    </div>
-                `;
-                savedEventsContainer.innerHTML += eventHTML;
+        // Add event listener to existing Book buttons
+        const bookButtons = savedEventsContainer.querySelectorAll('.book-btn');
+        bookButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                handleBooking(this.closest('.event-card'));
             });
+        });
 
-            // Add event listener to Book buttons
-            const bookButtons = savedEventsContainer.querySelectorAll('.book-btn');
-            bookButtons.forEach(function(button) {
-                button.addEventListener('click', function() {
-                    const eventName = this.parentNode.querySelector('.event-card-title').innerText;
-                    const confirmationMessage = `Booking confirmed for ${eventName}. Redirecting...`;
-                    alert(confirmationMessage); // Display confirmation message
-                    window.location.href = 'confirmation_page.html'; // Redirect to confirmation page
-                });
-            });
-        }
-
-        // Display saved events when the page loads
-        displaySavedEvents();
-
+        // Event listener for submitting a new event
         document.getElementById('submitEvent').addEventListener('click', function () {
             // Retrieve form data
             const clubName = document.getElementById('clubName').value;
@@ -201,48 +196,29 @@
             const eventDate = new Date(eventDateTime).toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
             const eventTime = new Date(eventDateTime).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 
-            // Construct event object
-            const newEvent = {
-                clubName: clubName,
-                placesAvailable: placesAvailable,
-                eventDate: eventDate,
-                eventTime: eventTime,
-                information: information
-            };
-
-            #// Save new event to localStorage
-            #const savedEvents = getSavedEvents();
-            #savedEvents.push(newEvent);
-           # saveEvents(savedEvents);
-
-            // Display newly added event
+            // Construct event HTML
             const eventHTML = `
                 <div class="event-card">
                     <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Event Image">
                     <div class="event-card-content">
-                        <h5 class="event-card-title">${newEvent.clubName}</h5>
-                        <p class="event-card-text">${newEvent.information} - ${newEvent.eventDate} ${newEvent.eventTime}</p>
+                        <h5 class="event-card-title">${clubName}</h5>
+                        <p class="event-card-text">${information} - ${eventDate} ${eventTime}</p>
                         <button type="button" class="btn btn-primary book-btn">Book</button>
                     </div>
                 </div>
             `;
+
+            // Append event HTML to savedEventsContainer
             savedEventsContainer.innerHTML += eventHTML;
 
             // Clear form fields
             eventForm.reset();
 
-            // Close modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
-            modal.hide();
-
             // Add event listener to new Book button
             const bookButtons = savedEventsContainer.querySelectorAll('.book-btn');
             bookButtons.forEach(function(button) {
                 button.addEventListener('click', function() {
-                    const eventName = this.parentNode.querySelector('.event-card-title').innerText;
-                    const confirmationMessage = `Booking confirmed for ${eventName}. Redirecting...`;
-                    alert(confirmationMessage); // Display confirmation message
-                    window.location.href = 'confirmation_page.html'; // Redirect to confirmation page
+                    handleBooking(this.closest('.event-card'));
                 });
             });
         });
