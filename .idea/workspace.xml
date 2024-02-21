@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c25ba347-7202-429c-b14f-7549f144ccfa" name="Changes" comment="Club name now shows on club management page" />
+    <list default="true" id="c25ba347-7202-429c-b14f-7549f144ccfa" name="Changes" comment="css was messing up navbar and footer - fixed">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/permissionpages.py" beforeDir="false" afterPath="$PROJECT_DIR$/permissionpages.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/myclubmanage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/myclubmanage.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -136,7 +140,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708522344834</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="css was messing up navbar and footer - fixed">
+      <option name="closed" value="true" />
+      <created>1708522424753</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1708522424753</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -159,6 +171,7 @@
     <MESSAGE value="fixed the database corruption issue" />
     <MESSAGE value="added header and footer to events" />
     <MESSAGE value="Club name now shows on club management page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Club name now shows on club management page" />
+    <MESSAGE value="css was messing up navbar and footer - fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="css was messing up navbar and footer - fixed" />
   </component>
 </project>
