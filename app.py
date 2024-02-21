@@ -76,16 +76,26 @@ def utility_processor():
             cursor = conn.cursor()
             cursor.execute('SELECT * FROM Users WHERE UserID = ?', (current_user.id,))
             currentUsrData = cursor.fetchone()
+            cursor.close()
+            conn.close()
+            clubname = None
+            if currentUsrData[5] == "Coordinator":
+                conn = db.connect('db/user_data.db')
+                cursor = conn.cursor()
+                cursor.execute('SELECT * FROM Clubs WHERE CoordinatorID=?',(current_user.id,))
+                clubname = cursor.fetchone()[1]
+            print(clubname)
             userData = auth.USERDATA(
                 currentUsrData[1],
                 currentUsrData[3],
                 currentUsrData[4],
                 currentUsrData[5],
-                currentUsrData[6]
+                currentUsrData[6],
+                clubname
             )
-            print(userData.role)
             return userData
         return auth.USERDATA(
+            None,
             None,
             None,
             None,

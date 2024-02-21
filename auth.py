@@ -79,12 +79,13 @@ def logout():
 
 
 class USERDATA:
-    def __init__(self, username, mobile, email, role, accountStatus) -> None:
+    def __init__(self, username, mobile, email, role, accountStatus, clubname=None) -> None:
         self.username = username
         self.mobile = mobile
         self.email = email
         self.role = role
         self.accountStatus = accountStatus
+        self.club = clubname
 
 
 
