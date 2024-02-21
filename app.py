@@ -1,15 +1,14 @@
-import sqlite3 as db
 
-from flask import Flask
-from flask_login import LoginManager, current_user
+from flask import Flask, render_template, redirect, url_for, request, flash, jsonify
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+import sqlite3 as db
+# flask --app app.py --debug run
+import hashlib
 
 import auth
 import clubs
-import permissionpages
 import static
-import updates
-
-# flask --app app.py --debug run
+import updates, permissionpages
 
 
 
@@ -63,13 +62,6 @@ def load_user(user_id):
     if user_data:
         return auth.User(user_data[0], user_data[1])
 
-
-'''
-"utility_processor" provides constant access to user data - if a user is logged in the user_data will
-be set with the corresponding data to the user, if not the data will be set as None.
-'''
-
-
 @app.context_processor
 def utility_processor():
     def current_user_data():
@@ -85,6 +77,7 @@ def utility_processor():
                 currentUsrData[5],
                 currentUsrData[6]
             )
+            print(userData.role)
             return userData
         return auth.USERDATA(
             None,
@@ -95,7 +88,6 @@ def utility_processor():
         )
 
     return dict(user_data=current_user_data())
-
 
 if __name__ == '__main__':
     app.run(debug=True)
