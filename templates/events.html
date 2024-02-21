@@ -1,8 +1,4 @@
-{% extends "base.html" %}
-
-{% block title %}Home - {{ super() }}{% endblock %}
-
-{% block content %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -68,30 +64,16 @@
     <!-- Display saved events -->
     <div class="event-container" id="savedEvents">
         <!-- Sample events (pre-loaded) -->
+        {%for data in events%}
         <div class="event-card">
             <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Event Image">
             <div class="event-card-content">
-                <h5 class="event-card-title">UL OPC</h5>
-                <p class="event-card-text">Beginner rock climbing. 17/02/2024 18:00.</p>
+                <h5 class="event-card-title">{{data[1]}}</h5>
+                <p class="event-card-text">{{data[2]}} {{data[3]}} {{data[4]}}</p>
                  <button type="button" class="btn btn-primary book-btn">Book</button>
             </div>
         </div>
-        <div class="event-card">
-            <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Event Image">
-            <div class="event-card-content">
-                <h5 class="event-card-title">Freshers hurling</h5>
-                <p class="event-card-text">Match against NUIG. 23/03/2024 19:00.</p>
-                 <button type="button" class="btn btn-primary book-btn">Book</button>
-            </div>
-        </div>
-        <div class="event-card">
-            <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Event Image">
-            <div class="event-card-content">
-                <h5 class="event-card-title">Surf club</h5>
-                <p class="event-card-text">Trip to Morocco. 22/01/2024 13:00.</p>
-                <button type="button" class="btn btn-primary book-btn">Book</button>
-            </div>
-        </div>
+        {%endfor%}
     </div>
 
     <!-- Confirmation Modal -->
@@ -122,10 +104,10 @@
                 </div>
                 <div class="modal-body">
                     <!-- Event registration form -->
-                    <form id="eventForm">
+                    <form id="eventForm" method="post" action="{{ url_for('createEvent') }}">
                         <div class="mb-3">
                             <label for="clubName" class="form-label">Club or Society</label>
-                            <input type="text" class="form-control" id="clubName" placeholder="Enter club or society name">
+                            <input type="text" class="form-control" name="clubName" id="clubName" placeholder="Enter club or society name">
                         </div>
                         <div class="mb-3">
                             <label for="placesAvailable" class="form-label">Places Available</label>
@@ -139,18 +121,19 @@
                         </div>
                         <div class="mb-3">
                             <label for="eventDateTime" class="form-label">Event Date and Time</label>
-                            <input type="datetime-local" class="form-control" id="eventDateTime">
+                            <input type="datetime-local" name="eventDateTime" class="form-control" id="eventDateTime">
                         </div>
                         <div class="mb-3">
                             <label for="information" class="form-label">Information</label>
-                            <textarea class="form-control" id="information" rows="3"></textarea>
+                            <textarea class="form-control" name="information" id="information" rows="3"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" id="submitEvent" value="Create"/>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="submitEvent">Submit</button>
-                </div>
+
             </div>
         </div>
     </div>
@@ -158,72 +141,5 @@
 
 <!-- Bootstrap JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-<script>
-    // JavaScript to handle event submission and booking existing events
-    document.addEventListener('DOMContentLoaded', function () {
-        const eventForm = document.getElementById('eventForm');
-        const savedEventsContainer = document.getElementById('savedEvents');
-
-        // Function to handle booking an existing event
-        function handleBooking(eventCard) {
-            const eventName = eventCard.querySelector('.event-card-title').innerText;
-            const confirmationMessage = `Booking confirmed for ${eventName}.`;
-
-            // Display confirmation message in modal
-            const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
-            const confirmationMessageElement = document.getElementById('confirmationMessage');
-            confirmationMessageElement.textContent = confirmationMessage;
-            confirmationModal.show();
-        }
-
-        // Add event listener to existing Book buttons
-        const bookButtons = savedEventsContainer.querySelectorAll('.book-btn');
-        bookButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                handleBooking(this.closest('.event-card'));
-            });
-        });
-
-        // Event listener for submitting a new event
-        document.getElementById('submitEvent').addEventListener('click', function () {
-            // Retrieve form data
-            const clubName = document.getElementById('clubName').value;
-            const placesAvailable = document.getElementById('placesAvailable').value;
-            const eventDateTime = document.getElementById('eventDateTime').value;
-            const information = document.getElementById('information').value;
-
-            // Format event date and time
-            const eventDate = new Date(eventDateTime).toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
-            const eventTime = new Date(eventDateTime).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-
-            // Construct event HTML
-            const eventHTML = `
-                <div class="event-card">
-                    <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Event Image">
-                    <div class="event-card-content">
-                        <h5 class="event-card-title">${clubName}</h5>
-                        <p class="event-card-text">${information} - ${eventDate} ${eventTime}</p>
-                        <button type="button" class="btn btn-primary book-btn">Book</button>
-                    </div>
-                </div>
-            `;
-
-            // Append event HTML to savedEventsContainer
-            savedEventsContainer.innerHTML += eventHTML;
-
-            // Clear form fields
-            eventForm.reset();
-
-            // Add event listener to new Book button
-            const bookButtons = savedEventsContainer.querySelectorAll('.book-btn');
-            bookButtons.forEach(function(button) {
-                button.addEventListener('click', function() {
-                    handleBooking(this.closest('.event-card'));
-                });
-            });
-        });
-    });
-</script>
 </body>
 </html>
-{% endblock %}

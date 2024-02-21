@@ -7,6 +7,7 @@ import hashlib
 
 import auth
 import clubs
+import events
 import static
 import updates, permissionpages
 
@@ -49,6 +50,11 @@ app.add_url_rule("/logout", view_func=auth.logout)
 app.add_url_rule("/retrieveData/<int:id>", methods=['GET', 'POST'], view_func=auth.retrieve_user_data)
 app.add_url_rule("/registerProcess", methods=['POST'], view_func=auth.registerDataProcess)
 app.add_url_rule("/loginProcess", methods=['GET', 'POST'], view_func=auth.loginDataProcess)
+
+app.add_url_rule("/createEvent", methods=['GET', 'POST'], view_func=events.createEvent)
+app.add_url_rule("/events", methods=['GET', 'POST'], view_func=events.eventsPage)
+
+
 
 
 @login_manager.user_loader
