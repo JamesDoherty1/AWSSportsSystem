@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c25ba347-7202-429c-b14f-7549f144ccfa" name="Changes" comment="Reformat other pages into their own files">
+    <list default="true" id="c25ba347-7202-429c-b14f-7549f144ccfa" name="Changes" comment="stashing wont work">
+      <change afterPath="$PROJECT_DIR$/db/user_data_fix.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/create_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/create_db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/user_data.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/user_data.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/myclubmanage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/myclubmanage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/profile.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,11 +49,16 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "profile-events",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/Niall/Desktop/ISE/projects/flaskClubManagement",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PythonContentEntriesConfigurable"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Niall\Desktop\ISE\projects\flaskClubManagement\db" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -107,7 +107,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707736708293</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="stashing wont work">
+      <option name="closed" value="true" />
+      <created>1708517805580</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1708517805580</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -126,6 +134,7 @@
     <MESSAGE value="Limited users to only 3 club memberships" />
     <MESSAGE value="Reformat permission pages and update files into different files" />
     <MESSAGE value="Reformat other pages into their own files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Reformat other pages into their own files" />
+    <MESSAGE value="stashing wont work" />
+    <option name="LAST_COMMIT_MESSAGE" value="stashing wont work" />
   </component>
 </project>
