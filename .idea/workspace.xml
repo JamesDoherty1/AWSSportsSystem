@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c25ba347-7202-429c-b14f-7549f144ccfa" name="Changes" comment="added header and footer to events">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/user_data.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/user_data.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/events.py" beforeDir="false" afterPath="$PROJECT_DIR$/events.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/myclubmanage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/myclubmanage.html" afterDir="false" />
-    </list>
+    <list default="true" id="c25ba347-7202-429c-b14f-7549f144ccfa" name="Changes" comment="Club name now shows on club management page" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -135,7 +128,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708520658333</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Club name now shows on club management page">
+      <option name="closed" value="true" />
+      <created>1708522344834</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1708522344834</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -157,6 +158,7 @@
     <MESSAGE value="stashing wont work" />
     <MESSAGE value="fixed the database corruption issue" />
     <MESSAGE value="added header and footer to events" />
-    <option name="LAST_COMMIT_MESSAGE" value="added header and footer to events" />
+    <MESSAGE value="Club name now shows on club management page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Club name now shows on club management page" />
   </component>
 </project>
