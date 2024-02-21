@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c25ba347-7202-429c-b14f-7549f144ccfa" name="Changes" comment="css was messing up navbar and footer - fixed">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/permissionpages.py" beforeDir="false" afterPath="$PROJECT_DIR$/permissionpages.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/myclubmanage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/myclubmanage.html" afterDir="false" />
-    </list>
+    <list default="true" id="c25ba347-7202-429c-b14f-7549f144ccfa" name="Changes" comment="My club page now works - need to add user deletion" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -148,7 +144,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708522424753</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="My club page now works - need to add user deletion">
+      <option name="closed" value="true" />
+      <created>1708523116655</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1708523116655</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -172,6 +176,7 @@
     <MESSAGE value="added header and footer to events" />
     <MESSAGE value="Club name now shows on club management page" />
     <MESSAGE value="css was messing up navbar and footer - fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="css was messing up navbar and footer - fixed" />
+    <MESSAGE value="My club page now works - need to add user deletion" />
+    <option name="LAST_COMMIT_MESSAGE" value="My club page now works - need to add user deletion" />
   </component>
 </project>
