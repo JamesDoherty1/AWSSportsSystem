@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, redirect, url_for, request, flash, jsonify
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import sqlite3 as db
@@ -9,6 +10,8 @@ import clubs
 import static
 import updates, permissionpages
 
+
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '1d8f6b8beff5'
 login_manager = LoginManager(app)
@@ -19,6 +22,7 @@ login_manager.login_view = 'login'
 # Permission based pages
 app.add_url_rule('/myclub', view_func=permissionpages.myclub)
 app.add_url_rule('/admin', view_func=permissionpages.admin)
+
 
 # Update queries
 app.add_url_rule('/updateClubMember', methods=['GET', 'POST'], view_func=updates.updateClubMember)
@@ -37,6 +41,7 @@ app.add_url_rule('/contact', view_func=static.contact)
 app.add_url_rule('/about', view_func=static.about)
 app.add_url_rule('/login', view_func=static.login)
 app.add_url_rule('/register', view_func=static.register)
+app.add_url_rule('/events', view_func=static.events)
 
 # Authentication
 app.add_url_rule("/profile", view_func=auth.profile)
@@ -44,6 +49,7 @@ app.add_url_rule("/logout", view_func=auth.logout)
 app.add_url_rule("/retrieveData/<int:id>", methods=['GET', 'POST'], view_func=auth.retrieve_user_data)
 app.add_url_rule("/registerProcess", methods=['POST'], view_func=auth.registerDataProcess)
 app.add_url_rule("/loginProcess", methods=['GET', 'POST'], view_func=auth.loginDataProcess)
+
 
 @login_manager.user_loader
 def load_user(user_id):

@@ -50,6 +50,9 @@
             <li class="nav-item active">
               <a class="nav-link" href="{{url_for('explore')}}">Explore<span class="sr-only">(current)</span></a>
             </li>
+              <li class="nav-item active">
+              <a class="nav-link" href="{{url_for('events')}}">Events<span class="sr-only">(current)</span></a>
+              </li>
               {% if user_data.role == 'Admin' %}
             <li class="nav-item active">
               <a class="nav-link" href="{{url_for('admin')}}">Admin<span class="sr-only">(current)</span></a>
