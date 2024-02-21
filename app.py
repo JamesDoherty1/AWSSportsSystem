@@ -4,14 +4,11 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 import sqlite3 as db
 # flask --app app.py --debug run
 import hashlib
-
 import auth
 import clubs
 import events
 import static
 import updates, permissionpages
-
-
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '1d8f6b8beff5'
@@ -52,9 +49,6 @@ app.add_url_rule("/logout", view_func=auth.logout)
 app.add_url_rule("/retrieveData/<int:id>", methods=['GET', 'POST'], view_func=auth.retrieve_user_data)
 app.add_url_rule("/registerProcess", methods=['POST'], view_func=auth.registerDataProcess)
 app.add_url_rule("/loginProcess", methods=['GET', 'POST'], view_func=auth.loginDataProcess)
-
-
-
 
 @login_manager.user_loader
 def load_user(user_id):
