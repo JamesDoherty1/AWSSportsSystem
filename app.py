@@ -1,13 +1,15 @@
-from flask import Flask, render_template, redirect, url_for, request, flash, jsonify
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import sqlite3 as db
-# flask --app app.py --debug run
-import hashlib
+
+from flask import Flask
+from flask_login import LoginManager, current_user
 
 import auth
 import clubs
+import permissionpages
 import static
-import updates, permissionpages
+import updates
+
+# flask --app app.py --debug run
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '1d8f6b8beff5'
@@ -45,6 +47,7 @@ app.add_url_rule("/retrieveData/<int:id>", methods=['GET', 'POST'], view_func=au
 app.add_url_rule("/registerProcess", methods=['POST'], view_func=auth.registerDataProcess)
 app.add_url_rule("/loginProcess", methods=['GET', 'POST'], view_func=auth.loginDataProcess)
 
+
 @login_manager.user_loader
 def load_user(user_id):
     conn = db.connect('db/user_data.db')
@@ -55,6 +58,13 @@ def load_user(user_id):
 
     if user_data:
         return auth.User(user_data[0], user_data[1])
+
+
+'''
+"utility_processor" provides constant access to user data - if a user is logged in the user_data will
+be set with the corresponding data to the user, if not the data will be set as None.
+'''
+
 
 @app.context_processor
 def utility_processor():
@@ -71,7 +81,6 @@ def utility_processor():
                 currentUsrData[5],
                 currentUsrData[6]
             )
-            print(userData.role)
             return userData
         return auth.USERDATA(
             None,
@@ -82,6 +91,7 @@ def utility_processor():
         )
 
     return dict(user_data=current_user_data())
+
 
 if __name__ == '__main__':
     app.run(debug=True)
