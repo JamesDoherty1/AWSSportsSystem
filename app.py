@@ -11,6 +11,8 @@ import updates
 
 # flask --app app.py --debug run
 
+
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '1d8f6b8beff5'
 login_manager = LoginManager(app)
@@ -21,6 +23,7 @@ login_manager.login_view = 'login'
 # Permission based pages
 app.add_url_rule('/myclub', view_func=permissionpages.myclub)
 app.add_url_rule('/admin', view_func=permissionpages.admin)
+
 
 # Update queries
 app.add_url_rule('/updateClubMember', methods=['GET', 'POST'], view_func=updates.updateClubMember)
@@ -39,6 +42,7 @@ app.add_url_rule('/contact', view_func=static.contact)
 app.add_url_rule('/about', view_func=static.about)
 app.add_url_rule('/login', view_func=static.login)
 app.add_url_rule('/register', view_func=static.register)
+app.add_url_rule('/events', view_func=static.events)
 
 # Authentication
 app.add_url_rule("/profile", view_func=auth.profile)
