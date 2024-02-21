@@ -96,12 +96,19 @@ def profile():
     cursor.execute('SELECT ClubID FROM ClubMemberships WHERE UserID = ?', (current_user.id,))
     clubIDs = cursor.fetchall()
     clubs = []
+    cursor.execute('SELECT EventID FROM EventRegistrations WHERE UserID = ?', (current_user.id,))
+    eventIDs = cursor.fetchall()
+    events = []
     for clubID in clubIDs:
         cursor.execute('SELECT * FROM Clubs WHERE ClubID = ?', clubID)
         club = cursor.fetchone()
         clubs.append(club)
-    print(clubs)
-    return render_template('/profile.html', clubs=clubs)
+    for eventID in eventIDs:
+        cursor.execute('SELECT * FROM Events WHERE EventID = ?', eventID)
+        event = cursor.fetchone()
+        print(event)
+        events.append(event)
+    return render_template('/profile.html', clubs=clubs, events=events)
 
 @login_required
 def retrieve_user_data(id):

@@ -101,9 +101,23 @@ insert_club_query = '''
 INSERT INTO Clubs (Name, Description, ValidityStatus, CoordinatorID)
 VALUES (?, ?, ?, ?)
 '''
-cursor.execute(insert_club_query, ("Outdoor Pursuits", "Explore the outdoors", "Valid", 5))
-conn.commit()
+#cursor.execute(insert_club_query, ("Outdoor Pursuits", "Explore the outdoors", "Valid", 5))
+#conn.commit()
 
+
+insert_event_query = '''
+INSERT INTO Events (Title, Description, Date, Time, Venue, ClubID)
+VALUES (?, ?, ?, ?, ?, ?)
+'''
+#cursor.execute(insert_event_query, ("Outdoor Pursuits climbing", "Wednesday bouldering and top rope climbing", "21/02/2024", "19:00","UL climbing wall", 3))
+#conn.commit()
+
+insert_event_registrations_query = '''
+INSERT INTO EventRegistrations ( UserID, EventID)
+VALUES (?, ?)
+'''
+cursor.execute(insert_event_registrations_query, (1,1))
+conn.commit()
 # Close the cursor and connection
 cursor.close()
 conn.close()
