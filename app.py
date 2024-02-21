@@ -34,6 +34,8 @@ app.add_url_rule('/joinClub', methods=['GET', 'POST'], view_func=clubs.joinClub)
 app.add_url_rule('/createClub', methods=['GET', 'POST'], view_func=clubs.createClub)
 app.add_url_rule('/explore/<int:id>', view_func=clubs.clubpage)
 app.add_url_rule('/explore', view_func=clubs.explore)
+app.add_url_rule("/events", view_func=events.eventsPage)
+app.add_url_rule("/createEvent", methods=['GET', 'POST'], view_func=events.createEvent)
 
 # Static pages
 app.add_url_rule('/', view_func=static.home)
@@ -50,9 +52,6 @@ app.add_url_rule("/logout", view_func=auth.logout)
 app.add_url_rule("/retrieveData/<int:id>", methods=['GET', 'POST'], view_func=auth.retrieve_user_data)
 app.add_url_rule("/registerProcess", methods=['POST'], view_func=auth.registerDataProcess)
 app.add_url_rule("/loginProcess", methods=['GET', 'POST'], view_func=auth.loginDataProcess)
-
-app.add_url_rule("/events", view_func=events.eventsPage)
-app.add_url_rule("/createEvent", methods=['GET', 'POST'], view_func=events.createEvent)
 
 
 

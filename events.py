@@ -29,11 +29,10 @@ def eventsPage():
     conn = sqlite3.connect('db/user_data.db')
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM Events')
-    events = cursor.fetchall()
-    conn.close()
+    data = cursor.fetchall()
     print("EHEHRHEH")
 
-    return render_template('events.html', events=events)
+    return render_template('/events.html', events=data)
 
 
 if __name__ == '__main__':
