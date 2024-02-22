@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c25ba347-7202-429c-b14f-7549f144ccfa" name="Changes" comment="My club page now works - need to add user deletion" />
+    <list default="true" id="c25ba347-7202-429c-b14f-7549f144ccfa" name="Changes" comment="Allow users to sign up for events and the button changes on registration">
+      <change beforePath="$PROJECT_DIR$/.idea/flaskClubManagement.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/flaskClubManagement.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/user_data.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/user_data.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/permissionpages.py" beforeDir="false" afterPath="$PROJECT_DIR$/permissionpages.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/myclubmanage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/myclubmanage.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,20 +44,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.add_club.executor&quot;: &quot;Run&quot;,
-    &quot;Python.app.executor&quot;: &quot;Run&quot;,
-    &quot;Python.create_db.executor&quot;: &quot;Run&quot;,
-    &quot;Python.permissionpages.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Niall/Desktop/ISE/projects/flaskClubManagement&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PythonContentEntriesConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.add_club.executor": "Run",
+    "Python.app.executor": "Run",
+    "Python.create_db.executor": "Run",
+    "Python.events.executor": "Run",
+    "Python.permissionpages.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "eventbooking",
+    "last_opened_file_path": "C:/Users/Niall/Desktop/ISE/projects/flaskClubManagement",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PythonContentEntriesConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Niall\Desktop\ISE\projects\flaskClubManagement\db" />
@@ -152,7 +160,39 @@
       <option name="project" value="LOCAL" />
       <updated>1708523116655</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Fix events being displayed on the screen due to routing issues.">
+      <option name="closed" value="true" />
+      <created>1708528543527</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1708528543527</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Clean up app.py">
+      <option name="closed" value="true" />
+      <created>1708528596284</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1708528596284</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Require login for event page">
+      <option name="closed" value="true" />
+      <created>1708529253220</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1708529253220</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Allow users to sign up for events and the button changes on registration">
+      <option name="closed" value="true" />
+      <created>1708610400589</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1708610400589</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -177,6 +217,10 @@
     <MESSAGE value="Club name now shows on club management page" />
     <MESSAGE value="css was messing up navbar and footer - fixed" />
     <MESSAGE value="My club page now works - need to add user deletion" />
-    <option name="LAST_COMMIT_MESSAGE" value="My club page now works - need to add user deletion" />
+    <MESSAGE value="Fix events being displayed on the screen due to routing issues." />
+    <MESSAGE value="Clean up app.py" />
+    <MESSAGE value="Require login for event page" />
+    <MESSAGE value="Allow users to sign up for events and the button changes on registration" />
+    <option name="LAST_COMMIT_MESSAGE" value="Allow users to sign up for events and the button changes on registration" />
   </component>
 </project>
