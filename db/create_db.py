@@ -116,6 +116,17 @@ insert_event_registrations_query = '''
 INSERT INTO EventRegistrations ( UserID, EventID)
 VALUES (?, ?)
 '''
+
+create_trigger_query = '''
+CREATE TRIGGER IF NOT EXISTS update_event_timestamp
+AFTER INSERT ON EventRegistrations
+BEGIN
+    UPDATE Events
+    SET UpdatedAt = CURRENT_TIMESTAMP
+    WHERE EventID = NEW.EventID;
+END;
+'''
+
 cursor.execute(insert_event_registrations_query, (1,1))
 conn.commit()
 # Close the cursor and connection
