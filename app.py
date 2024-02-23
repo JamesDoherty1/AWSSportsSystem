@@ -4,13 +4,11 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 import sqlite3 as db
 # flask --app app.py --debug run
 import hashlib
-
 import auth
 import clubs
+import events
 import static
 import updates, permissionpages
-
-
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '1d8f6b8beff5'
@@ -33,6 +31,8 @@ app.add_url_rule('/joinClub', methods=['GET', 'POST'], view_func=clubs.joinClub)
 app.add_url_rule('/createClub', methods=['GET', 'POST'], view_func=clubs.createClub)
 app.add_url_rule('/explore/<int:id>', view_func=clubs.clubpage)
 app.add_url_rule('/explore', view_func=clubs.explore)
+app.add_url_rule("/events", view_func=events.eventsPage)
+app.add_url_rule("/createEvent", methods=['GET', 'POST'], view_func=events.createEvent)
 
 # Static pages
 app.add_url_rule('/', view_func=static.home)
@@ -49,7 +49,6 @@ app.add_url_rule("/logout", view_func=auth.logout)
 app.add_url_rule("/retrieveData/<int:id>", methods=['GET', 'POST'], view_func=auth.retrieve_user_data)
 app.add_url_rule("/registerProcess", methods=['POST'], view_func=auth.registerDataProcess)
 app.add_url_rule("/loginProcess", methods=['GET', 'POST'], view_func=auth.loginDataProcess)
-
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -70,16 +69,26 @@ def utility_processor():
             cursor = conn.cursor()
             cursor.execute('SELECT * FROM Users WHERE UserID = ?', (current_user.id,))
             currentUsrData = cursor.fetchone()
+            cursor.close()
+            conn.close()
+            clubname = None
+            if currentUsrData[5] == "Coordinator":
+                conn = db.connect('db/user_data.db')
+                cursor = conn.cursor()
+                cursor.execute('SELECT * FROM Clubs WHERE CoordinatorID=?',(current_user.id,))
+                clubname = cursor.fetchone()[1]
+            print(clubname)
             userData = auth.USERDATA(
                 currentUsrData[1],
                 currentUsrData[3],
                 currentUsrData[4],
                 currentUsrData[5],
-                currentUsrData[6]
+                currentUsrData[6],
+                clubname
             )
-            print(userData.role)
             return userData
         return auth.USERDATA(
+            None,
             None,
             None,
             None,

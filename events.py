@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify, url_for
 import sqlite3
+from flask_login import current_user, login_required
 
 from werkzeug.utils import redirect
 
@@ -25,14 +26,15 @@ def createEvent():
 
 
 # Flask route to render the events page
+@login_required
 def eventsPage():
     conn = sqlite3.connect('db/user_data.db')
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM Events')
-    events = cursor.fetchall()
-    conn.close()
+    data = cursor.fetchall()
+    print("EHEHRHEH")
 
-    return render_template('events.html', events=events)
+    return render_template('/events.html', events=data)
 
 
 if __name__ == '__main__':
