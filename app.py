@@ -33,6 +33,7 @@ app.add_url_rule('/explore/<int:id>', view_func=clubs.clubpage)
 app.add_url_rule('/explore', view_func=clubs.explore)
 app.add_url_rule("/events", view_func=events.eventsPage)
 app.add_url_rule("/createEvent", methods=['GET', 'POST'], view_func=events.createEvent)
+app.add_url_rule("/joinEvent", methods=['GET', 'POST'], view_func=events.joinEvent)
 
 # Static pages
 app.add_url_rule('/', view_func=static.home)

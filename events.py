@@ -28,11 +28,47 @@ def createEvent():
 # Flask route to render the events page
 @login_required
 def eventsPage():
+    print(current_user.id)
     conn = sqlite3.connect('db/user_data.db')
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM Events')
     data = cursor.fetchall()
-    return render_template('/events.html', events=data)
+
+    for i, item in enumerate(data):
+        cursor.execute('SELECT * FROM EventRegistrations WHERE EventID = ? AND UserID = ?', (item[0], current_user.id))
+        exists = cursor.fetchone()
+
+        if exists:
+            item = list(item)
+            item.append(True)
+            data[i] = tuple(item)
+        else:
+            item = list(item)
+            item.append(False)
+            data[i] = tuple(item)
+
+    return render_template('/events.html', events=data, current_user=current_user)
+
+
+
+@login_required
+def joinEvent():
+    userId = request.form['userId']
+    eventId = request.form['eventId']
+
+    conn = sqlite3.connect('db/user_data.db')
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT * FROM EventRegistrations WHERE EventID = ? AND UserID = ?', (eventId, userId))
+    exists = cursor.fetchone()
+
+    if exists:
+        return redirect(url_for('events'))
+    else:
+        cursor.execute('INSERT INTO EventRegistrations (EventID, UserID) VALUES (?,?)',
+                       (eventId, userId))
+        conn.commit()
+        return redirect(url_for('events'))
 
 
 if __name__ == '__main__':

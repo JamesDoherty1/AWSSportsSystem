@@ -65,9 +65,19 @@
         <div class="event-card">
             <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Event Image">
             <div class="event-card-content">
-                <h5 class="event-card-title">{{data[1]}}</h5>
-                <p class="event-card-text">{{data[2]}} {{data[3]}} {{data[4]}}</p>
-                 <button type="button" class="btn btn-primary book-btn">Book</button>
+                <h5 class="event-card-title">{{ data[1] }}</h5>
+                <p class="event-card-text">{{ data[2] }}</p>
+                <p class="event-card-text">{{ data[3] }} {{ data[4] }}</p>
+                {% if not data[-1] %}
+                <form method="post" action="{{ url_for('joinEvent') }}">
+                    <input type="hidden" value="{{ data[6] }}" name="clubId"/>
+                    <input type="hidden" value="{{ current_user.id }}" name="userId"/>
+                    <input type="hidden" value="{{ data[0] }}" name="eventId"/>
+                    <input type="submit" class="btn btn-primary book-btn" value="Book"/>
+                </form>
+                {% else %}
+                <button type="submit" class="btn btn-primary book-btn" disabled>Registered!</button>
+                {% endif %}
             </div>
         </div>
         {%endfor%}
