@@ -8,15 +8,10 @@ def myclub():
     else:
         conn = db.connect('db/user_data.db')
         cursor = conn.cursor()
-        # fetch role of current user
-        conn = db.connect('db/user_data.db')
-        cursor = conn.cursor()
         cursor.execute('SELECT Role FROM Users WHERE UserID = ?', (current_user.id,))
         role_data = cursor.fetchone()
-
         cursor.execute('SELECT * FROM Clubs WHERE CoordinatorID = ?', (current_user.id,))
         club_owner = cursor.fetchone()
-
         if role_data[0] == 'Coordinator' and club_owner:
             cursor.execute('''
                         SELECT u.UserID, u.Username, u.Contact, u.Email, c.RequestStatus, c.CreatedAt
@@ -25,7 +20,6 @@ def myclub():
                         WHERE c.ClubID = ?
                     ''', (club_owner[0],))
             club_users = cursor.fetchall()
-            print(club_users)
             return render_template('/myclubmanage.html', current_user=current_user, club_data=club_owner, club_users=club_users)
         elif role_data[0] == 'Coordinator' and club_owner is None:
             return render_template('/myclubcreate.html', current_user=current_user)

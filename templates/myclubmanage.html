@@ -172,9 +172,6 @@ table.table .avatar {
                     <div class="col-sm-5">
                         <h2><b>UL Coordinator - </b> {{user_data.club}}</h2>
                     </div>
-                    <div class="col-sm-7">
-                        <a href="#" class="btn btn-secondary"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
-                    </div>
                 </div>
             </div>
             <table class="table table-striped table-hover">
@@ -199,13 +196,15 @@ table.table .avatar {
 
                         <form method="post" action="{{ url_for('updateClubMember') }}">
 
+                            <input  hidden="hidden" name="clubID" value="{{club_data[0]}}">
+                            <input  hidden="hidden" name="userID" value="{{data[0]}}">
 
                             <td>{{data[5]}}</td>
 
-                            {% if data[6] != "Pending" %}
-                                <td><input type="hidden" name="approval" value="on"/><span class="status text-success">&bull;</span> {{data[6]}}</td>
+                            {% if data[4] != "Pending" %}
+                                <td><input type="hidden" name="approval" value="on"/><span class="status text-success">&bull;</span> {{data[4]}}</td>
                             {% else %}
-                                <td><input type="checkbox" name="approval"/><span class="status text-danger">&bull;</span> {{data[6]}}</td>
+                                <td><input type="checkbox" name="approval"/><span class="status text-danger">&bull;</span> {{data[4]}}</td>
                             {% endif %}
                             <td>
                                   <button type="submit" style="background: transparent; border: 0; padding: 0; color: blue;" class="update-user" title="Update User" data-toggle="tooltip">

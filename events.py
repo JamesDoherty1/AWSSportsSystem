@@ -32,8 +32,6 @@ def eventsPage():
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM Events')
     data = cursor.fetchall()
-    print("EHEHRHEH")
-
     return render_template('/events.html', events=data)
 
 

@@ -9,10 +9,8 @@ def updateClubMember():
     cursor = conn.cursor()
     cursor.execute('SELECT Role FROM Users WHERE UserID = ?', (current_user.id,))
     user_data = cursor.fetchone()
-
     cursor.execute('SELECT CoordinatorID FROM Clubs WHERE ClubID = ?', (int(request.form['clubID']),))
     club_owner_id = cursor.fetchone()
-    print(current_user.id, club_owner_id)
     if user_data[0] == "Coordinator" and current_user.id == club_owner_id[0]:
         approved = ''
         if request.form['approval'] is not None and request.form['approval'] == 'on':
@@ -47,5 +45,6 @@ def updateMember():
         return redirect(url_for('admin'))
     else:
         return redirect(url_for('home'))
+
 
 
