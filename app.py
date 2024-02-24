@@ -24,6 +24,7 @@ app.add_url_rule('/admin', view_func=permissionpages.admin)
 
 # Update queries
 app.add_url_rule('/updateClubMember', methods=['GET', 'POST'], view_func=updates.updateClubMember)
+app.add_url_rule('/updateClubMemberEvent', methods=['GET', 'POST'], view_func=updates.updateClubMemberEvent)
 app.add_url_rule('/updateMember', methods=['GET', 'POST'], view_func=updates.updateMember)
 
 # Club based pages

@@ -266,11 +266,15 @@ table.table .avatar {
                         <td>{{data[3]}}</td>
                         <td>{{data[2]}}</td>
 
-                        <form method="post" action="{{ url_for('updateClubMember') }}">
-                            {% if data[6] != "Pending" %}
-                                <td><input type="hidden" name="approval" value="on"/><span class="status text-success">&bull;</span> {{data[6]}}</td>
+                        <form method="post" action="{{ url_for('updateClubMemberEvent') }}">
+
+                            <input  hidden="hidden" name="clubID" value="{{club_data[0]}}">
+                            <input  hidden="hidden" name="eventID" value="{{event_data[0]}}">
+                            <input  hidden="hidden" name="userID" value="{{data[0]}}">
+                            {% if data[4] != "Pending" %}
+                                <td><input type="hidden" name="approval" value="on"/><span class="status text-success">&bull;</span> {{data[4]}}</td>
                             {% else %}
-                                <td><input type="checkbox" name="approval"/><span class="status text-danger">&bull;</span> {{data[6]}}</td>
+                                <td><input type="checkbox" name="approval"/><span class="status text-danger">&bull;</span> {{data[4]}}</td>
                             {% endif %}
                             <td>
                                   <button type="submit" style="background: transparent; border: 0; padding: 0; color: blue;" class="update-user" title="Update User" data-toggle="tooltip">

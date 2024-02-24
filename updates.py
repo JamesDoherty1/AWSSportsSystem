@@ -22,7 +22,24 @@ def updateClubMember():
         return redirect(url_for('myclub'))
     else:
         return redirect(url_for('home'))
+def updateClubMemberEvent():
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT Role FROM Users WHERE UserID = ?', (current_user.id,))
+    user_data = cursor.fetchone()
+    cursor.execute('SELECT CoordinatorID FROM Clubs WHERE ClubID = ?', (int(request.form['clubID']),))
+    club_owner_id = cursor.fetchone()
+    if user_data[0] == "Coordinator" and current_user.id == club_owner_id[0]:
+        approved = ''
+        if request.form['approval'] is not None and request.form['approval'] == 'on':
+            approved = 'Approved'
+            cursor.execute('UPDATE EventRegistrations SET Status = ? WHERE UserID = ? AND EventID = ?',
+                           (approved, int(request.form['userID']), int(request.form['eventID'][1])))
+            conn.commit()
 
+        return redirect(url_for('myclub'))
+    else:
+        return redirect(url_for('home'))
 def updateMember():
     conn = db.connect('db/user_data.db')
     cursor = conn.cursor()

@@ -41,8 +41,7 @@ def myclub():
                             ''', (event[0],))
                 registered_data.append(cursor.fetchall())
 
-            print(registered_data)
-
+            print(event_data)
             return render_template('/myclubmanage.html', current_user=current_user, club_data=club_owner, club_users=club_users, event_data=event_data, registered_data=registered_data)
         elif role_data[0] == 'Coordinator' and club_owner is None:
             return render_template('/myclubcreate.html', current_user=current_user)
