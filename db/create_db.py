@@ -116,8 +116,13 @@ insert_event_registrations_query = '''
 INSERT INTO EventRegistrations ( UserID, EventID)
 VALUES (?, ?)
 '''
-cursor.execute(insert_event_registrations_query, (1,1))
-conn.commit()
+#cursor.execute(insert_event_registrations_query, (1,1))
+#conn.commit()
+
+#cursor.execute("DELETE FROM Events WHERE EventID = ?", (3,))
+
+# Commit the changes to the database
+#conn.commit()
 # Close the cursor and connection
 cursor.close()
 conn.close()

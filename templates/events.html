@@ -54,9 +54,13 @@
 
 <div class="container">
     <!-- Button trigger modal -->
+    {% if user_data[3] == "Coordinator" %}
     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Register event
     </button>
+    {% endif %}
+
+
 
     <!-- Display saved events -->
     <div class="event-container" id="savedEvents">
@@ -82,7 +86,7 @@
         </div>
         {%endfor%}
     </div>
-
+    {% if user_data[3] == "Coordinator" %}
     <!-- Confirmation Modal -->
     <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -145,6 +149,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 
 <!-- Bootstrap JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, url_for
+from flask import Flask, render_template, request, jsonify, url_for, flash
 import sqlite3
 from flask_login import current_user, login_required
 
@@ -9,14 +9,18 @@ app = Flask(__name__)
 
 # Flask route to handle event registration
 def createEvent():
+    conn = sqlite3.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT role FROM Users WHERE UserID = ?', (current_user.id,))
+    if cursor.fetchone()[0] != 'Coordinator':
+        return redirect(url_for('events'))
     club_name = request.form['clubName']
     event_date_time = request.form['eventDateTime']
     information = request.form['information']
-    print(club_name, event_date_time, information)
+    print(current_user)
 
     # Insert event into the database
-    conn = sqlite3.connect('db/user_data.db')
-    cursor = conn.cursor()
+
     cursor.execute('INSERT INTO Events (Title, Description, Date, Time, Venue) VALUES (?, ?, ?, ?, ?)',
                    (club_name, information, event_date_time.split('T')[0], event_date_time.split('T')[1], 'Your Venue'))
     conn.commit()
@@ -31,6 +35,7 @@ def eventsPage():
     print(current_user.id)
     conn = sqlite3.connect('db/user_data.db')
     cursor = conn.cursor()
+
     cursor.execute('SELECT * FROM Events')
     data = cursor.fetchall()
 
@@ -58,6 +63,12 @@ def joinEvent():
 
     conn = sqlite3.connect('db/user_data.db')
     cursor = conn.cursor()
+    cursor.execute('SELECT ClubID FROM Events WHERE EventID = ?', (eventId,))
+    clubId = cursor.fetchone()[0]
+    cursor.execute('SELECT * FROM ClubMemberships WHERE (UserID,ClubID)=(?,?)', (userId,clubId))
+    if cursor.fetchone() is None:
+        flash('You cannot sign up for an event without being a member of the club first!', 'error')
+        return redirect(url_for('explore'))
 
     cursor.execute('SELECT * FROM EventRegistrations WHERE EventID = ? AND UserID = ?', (eventId, userId))
     exists = cursor.fetchone()
