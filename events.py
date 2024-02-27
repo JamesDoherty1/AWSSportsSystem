@@ -55,7 +55,6 @@ def eventsPage():
     return render_template('/events.html', events=data, current_user=current_user)
 
 
-
 @login_required
 def joinEvent():
     userId = request.form['userId']
@@ -65,10 +64,6 @@ def joinEvent():
     cursor = conn.cursor()
     cursor.execute('SELECT ClubID FROM Events WHERE EventID = ?', (eventId,))
     clubId = cursor.fetchone()[0]
-    cursor.execute('SELECT * FROM ClubMemberships WHERE (UserID,ClubID)=(?,?)', (userId,clubId))
-    if cursor.fetchone() is None:
-        flash('You cannot sign up for an event without being a member of the club first!', 'error')
-        return redirect(url_for('explore'))
 
     cursor.execute('SELECT * FROM EventRegistrations WHERE EventID = ? AND UserID = ?', (eventId, userId))
     exists = cursor.fetchone()
@@ -76,8 +71,15 @@ def joinEvent():
     if exists:
         return redirect(url_for('events'))
     else:
-        cursor.execute('INSERT INTO EventRegistrations (EventID, UserID) VALUES (?,?)',
-                       (eventId, userId))
+        print(clubId,userId)
+        cursor.execute('SELECT * FROM ClubMemberships WHERE (UserID,ClubID)=(?,?)', (userId, clubId))
+        if cursor.fetchone() is None:
+            cursor.execute('INSERT INTO EventRegistrations (EventID, UserID) VALUES (?,?)',
+                           (eventId, userId))
+        else:
+            cursor.execute('INSERT INTO EventRegistrations (EventID, UserID, Status) VALUES (?,?,?)',
+                           (eventId, userId, "Approved"))
+
         conn.commit()
         return redirect(url_for('events'))
 
