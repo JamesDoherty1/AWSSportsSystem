@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, redirect, url_for, request, flash, jsonify
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import sqlite3 as db
@@ -27,6 +26,10 @@ app.add_url_rule('/updateClubMember', methods=['GET', 'POST'], view_func=updates
 app.add_url_rule('/updateClubMemberEvent', methods=['GET', 'POST'], view_func=updates.updateClubMemberEvent)
 app.add_url_rule('/updateMember', methods=['GET', 'POST'], view_func=updates.updateMember)
 app.add_url_rule('/updateUserDetails', methods=['GET', 'POST'], view_func=updates.updateUserDetails)
+app.add_url_rule('/deleteUserFromClub', methods=['GET', 'POST'],view_func=updates.deleteUserFromClub)
+app.add_url_rule('/deleteUserFromClubEvents', methods=['GET', 'POST'],view_func=updates.deleteUserFromClubEvents)
+
+
 
 # Club based pages
 app.add_url_rule('/joinClub', methods=['GET', 'POST'], view_func=clubs.joinClub)
