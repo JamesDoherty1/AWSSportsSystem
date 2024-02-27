@@ -1,6 +1,7 @@
 import sqlite3 as db
 from flask import Flask, render_template, redirect, url_for, request, flash, jsonify
 import jinja2
+import ast
 from flask_login import current_user
 
 
@@ -12,18 +13,30 @@ def updateClubMember():
     cursor.execute('SELECT CoordinatorID FROM Clubs WHERE ClubID = ?', (int(request.form['clubID']),))
     club_owner_id = cursor.fetchone()
     if user_data[0] == "Coordinator" and current_user.id == club_owner_id[0]:
-        approved = ''
         if request.form['approval'] is not None and request.form['approval'] == 'on':
             approved = 'Approved'
             cursor.execute('UPDATE ClubMemberships SET RequestStatus = ? WHERE UserID = ? AND ClubID = ?',
                            (approved, int(request.form['userID']), int(request.form['clubID'])))
-            conn.commit()
-
+        elif request.form['approval'] != 'on':
+            cursor.execute('REMOVE FROM ClubMemberships WHERE UserID=?', (int(request.form['userID']),))
+        conn.commit()
         return redirect(url_for('myclub'))
     else:
         return redirect(url_for('home'))
 
+def deleteUserFromClub():
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM ClubMemberships WHERE UserID=?', (int(request.form['userID']),))
+    conn.commit()
+    return redirect(url_for('myclub'))
 
+def deleteUserFromClubEvents():
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM EventRegistrations WHERE (UserID, EventID)=(?,?)', (int(request.form['userID']), int(ast.literal_eval(request.form['eventID'])[0])))
+    conn.commit()
+    return redirect(url_for('myclub'))
 def updateClubMemberEvent():
     conn = db.connect('db/user_data.db')
     cursor = conn.cursor()
@@ -31,8 +44,8 @@ def updateClubMemberEvent():
     user_data = cursor.fetchone()
     cursor.execute('SELECT CoordinatorID FROM Clubs WHERE ClubID = ?', (int(request.form['clubID']),))
     club_owner_id = cursor.fetchone()
+
     if user_data[0] == "Coordinator" and current_user.id == club_owner_id[0]:
-        approved = ''
         if request.form['approval'] is not None and request.form['approval'] == 'on':
             approved = 'Approved'
             cursor.execute('UPDATE EventRegistrations SET Status = ? WHERE UserID = ? AND EventID = ?',
@@ -50,7 +63,6 @@ def updateMember():
     cursor.execute('SELECT Role FROM Users WHERE UserID = ?', (current_user.id,))
     user_data = cursor.fetchone()
     if user_data[0] == "Admin":
-        print(request.form['userID'], request.form['role'])
 
         approved = ''
         if request.form['approval'] is not None and request.form['approval'] == 'on':
@@ -76,5 +88,4 @@ def updateUserDetails():
         cursor.execute('UPDATE Users SET Username=?, Contact=?, Email=? WHERE UserID=?',
                        (request.form['Username'], request.form['mobileNumber'], request.form['Email'], current_user.id))
     return redirect(url_for('profile'))
-
 
