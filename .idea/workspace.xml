@@ -4,14 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c25ba347-7202-429c-b14f-7549f144ccfa" name="Changes" comment="Event registrations now must be approved">
+    <list default="true" id="c25ba347-7202-429c-b14f-7549f144ccfa" name="Changes" comment="You can no longer create an event if you are not a coordinator, you can no longer join an event if you are not a member.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/create_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/create_db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/user_data.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/user_data.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/events.py" beforeDir="false" afterPath="$PROJECT_DIR$/events.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/events.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/events.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/explore.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/explore.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user_data.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/myclubmanage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/myclubmanage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/updates.py" beforeDir="false" afterPath="$PROJECT_DIR$/updates.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,7 +192,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708803297553</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="You can no longer create an event if you are not a coordinator, you can no longer join an event if you are not a member.">
+      <option name="closed" value="true" />
+      <created>1708863983267</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1708863983267</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -221,6 +229,7 @@
     <MESSAGE value="Made it so coordinators can approve club members" />
     <MESSAGE value="idk" />
     <MESSAGE value="Event registrations now must be approved" />
-    <option name="LAST_COMMIT_MESSAGE" value="Event registrations now must be approved" />
+    <MESSAGE value="You can no longer create an event if you are not a coordinator, you can no longer join an event if you are not a member." />
+    <option name="LAST_COMMIT_MESSAGE" value="You can no longer create an event if you are not a coordinator, you can no longer join an event if you are not a member." />
   </component>
 </project>

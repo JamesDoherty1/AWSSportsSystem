@@ -4,9 +4,50 @@
 
 {% block content %}
 <section>
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Edit Details</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <form method="post" action="{{ url_for('updateUserDetails') }}">
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="form-outline mb-4">
+            <input type="text" id="Username" value="{{user_data.username }}" data-fv-notempty-message="This field cannot be left blank." placeholder="Username" class="form-control" name="Username" />
+            <label class="form-label" for="Username">Username</label>
+          </div>
+          <div class="form-outline mb-4">
+            <input type="email" id="Email" value="{{user_data.email }}" data-fv-notempty-message="This field cannot be left blank." placeholder="Email"class="form-control" name="Email" />
+            <label class="form-label" for="Email">Email</label>
+          </div>
+          <div class="form-outline mb-4">
+              <input class="form-control" data-fv-field="data[User][mobile]"
+                     value="{{user_data.mobile }}"
+                     data-fv-notempty-message="This field cannot be left blank."
+                     data-fv-numeric="true" data-fv-numeric-message="Please enter valid phone numbers"
+                     data-fv-phone-country11="IN" id="userMobile" maxlength="14" name="mobileNumber"
+                     placeholder="Mobile No. " required="required" type="text">
+              <label class="form-label" for="userMobile">Mobile Number</label>
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" >Submit Details</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+
     <div class="container py-5">
-
-
       <div class="row">
         <div class="col-lg-4">
           <div class="card mb-4">
@@ -15,6 +56,10 @@
                 class="rounded-circle img-fluid" style="width: 150px;">
               <h5 class="my-3">{{ user_data.username }}</h5>
               <p class="text-muted mb-1">{{ user_data.role}}</p>
+              <button style="background: transparent; border: 0; padding: 0; " type="button" class="btn " data-toggle="modal" data-target="#myModal">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+                  </svg></button>
             </div>
           </div>
         </div>
@@ -27,6 +72,7 @@
                 </div>
                 <div class="col-sm-9">
                   <p class="text-muted mb-0">{{ user_data.username }}</p>
+
                 </div>
               </div>
               <hr>

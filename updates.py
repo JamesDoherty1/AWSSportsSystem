@@ -22,6 +22,8 @@ def updateClubMember():
         return redirect(url_for('myclub'))
     else:
         return redirect(url_for('home'))
+
+
 def updateClubMemberEvent():
     conn = db.connect('db/user_data.db')
     cursor = conn.cursor()
@@ -40,6 +42,8 @@ def updateClubMemberEvent():
         return redirect(url_for('myclub'))
     else:
         return redirect(url_for('home'))
+
+
 def updateMember():
     conn = db.connect('db/user_data.db')
     cursor = conn.cursor()
@@ -63,5 +67,14 @@ def updateMember():
     else:
         return redirect(url_for('home'))
 
+
+def updateUserDetails():
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+
+    with conn:
+        cursor.execute('UPDATE Users SET Username=?, Contact=?, Email=? WHERE UserID=?',
+                       (request.form['Username'], request.form['mobileNumber'], request.form['Email'], current_user.id))
+    return redirect(url_for('profile'))
 
 

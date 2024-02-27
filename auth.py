@@ -94,10 +94,10 @@ class USERDATA:
 def profile():
     conn = db.connect('db/user_data.db')
     cursor = conn.cursor()
-    cursor.execute('SELECT ClubID FROM ClubMemberships WHERE UserID = ?', (current_user.id,))
+    cursor.execute('SELECT ClubID FROM ClubMemberships WHERE UserID = ? AND requestStatus = "Approved"', (current_user.id,))
     clubIDs = cursor.fetchall()
     clubs = []
-    cursor.execute('SELECT EventID FROM EventRegistrations WHERE UserID = ?', (current_user.id,))
+    cursor.execute('SELECT EventID FROM EventRegistrations WHERE UserID = ? AND Status = "Approved"', (current_user.id,))
     eventIDs = cursor.fetchall()
     events = []
     for clubID in clubIDs:

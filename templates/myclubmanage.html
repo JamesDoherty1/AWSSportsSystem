@@ -242,9 +242,6 @@ table.table .avatar {
                     <div class="col-sm-5">
                         <h2><b>Event - </b> {{event[1]}}</h2>
                     </div>
-                    <div class="col-sm-7">
-                        <a href="#" class="btn btn-secondary"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
-                    </div>
                 </div>
             </div>
             <table class="table table-striped table-hover">
@@ -266,7 +263,7 @@ table.table .avatar {
                         <td>{{data[3]}}</td>
                         <td>{{data[2]}}</td>
 
-                        <form method="post" action="{{ url_for('updateClubMemberEvent') }}">
+                        <form method="post" action="{{ url_for('updateUserDetails') }}">
 
                             <input  hidden="hidden" name="clubID" value="{{club_data[0]}}">
                             <input  hidden="hidden" name="eventID" value="{{event_data[0]}}">
