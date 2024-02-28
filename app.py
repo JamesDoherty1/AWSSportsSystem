@@ -28,6 +28,8 @@ app.add_url_rule('/updateMember', methods=['GET', 'POST'], view_func=updates.upd
 app.add_url_rule('/updateUserDetails', methods=['GET', 'POST'], view_func=updates.updateUserDetails)
 app.add_url_rule('/deleteUserFromClub', methods=['GET', 'POST'],view_func=updates.deleteUserFromClub)
 app.add_url_rule('/deleteUserFromClubEvents', methods=['GET', 'POST'],view_func=updates.deleteUserFromClubEvents)
+app.add_url_rule('/deleteUserAdmin', methods=['GET', 'POST'], view_func=updates.deleteUserAdmin)
+
 
 
 

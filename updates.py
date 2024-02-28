@@ -37,6 +37,23 @@ def deleteUserFromClubEvents():
     cursor.execute('DELETE FROM EventRegistrations WHERE (UserID, EventID)=(?,?)', (int(request.form['userID']), int(ast.literal_eval(request.form['eventID'])[0])))
     conn.commit()
     return redirect(url_for('myclub'))
+
+def deleteUserAdmin():
+    conn = db.connect('db/user_data.db')
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT Role FROM Users WHERE UserID=?", (request.form['userID'],))
+    if cursor.fetchone() != "Coordinator":
+        cursor.execute("DELETE FROM Users WHERE UserID = ?",(request.form['userID'],))
+        conn.commit()
+        cursor.execute("SELECT * FROM ClubMemberships WHERE UserID=?",(request.form['userID'],))
+        if cursor.fetchone() is not None:
+            cursor.execute("DELETE FROM ClubMemberships WHERE UserID=?", (request.form['userID'],))
+
+        cursor.execute("SELECT * FROM EventRegistrations WHERE UserID=?", (request.form['userID'],))
+        if cursor.fetchone() is not None:
+            cursor.execute("DELETE FROM EventRegistrations WHERE UserID=?", (request.form['userID'],))
+    return redirect(url_for('admin'))
 def updateClubMemberEvent():
     conn = db.connect('db/user_data.db')
     cursor = conn.cursor()

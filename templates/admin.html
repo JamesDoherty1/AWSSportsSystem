@@ -221,9 +221,17 @@ table.table .avatar {
                                     <i class="material-icons">&#xE5CA;</i>
                                   </button>
                                 <!--<a href="#" class="settings" title="Update User" data-toggle="tooltip"><i class="material-icons">&#xE5CA;</i></a>-->
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-                            </td>
+
                         </form>
+                        <form method="post" action="{{ url_for('deleteUserAdmin') }}">
+
+                                <input  hidden="hidden" name="userID" value="{{data[0]}}">
+                                    <!--<a href="#" class="settings" title="Update User" data-toggle="tooltip"><i class="material-icons">&#xE5CA;</i></a>-->
+                                    <button type="submit" style="background: transparent; border: 0; padding: 0; color: red;" title="Delete User" >
+                                    <i class="material-icons">&#xE5C9;</i>
+                                  </button>
+                                </form>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
