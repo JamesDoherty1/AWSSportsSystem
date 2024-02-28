@@ -118,7 +118,64 @@ VALUES (?, ?)
 '''
 #cursor.execute(insert_event_registrations_query, (1,1))
 #conn.commit()
+"""
+create_view_queries = [
+    '''
+    CREATE VIEW UserClubMemberships AS
+    SELECT Users.UserID, Users.Username, Users.Contact, Users.Email, Users.Role,
+           ClubMemberships.MembershipID, ClubMemberships.ClubID, ClubMemberships.RequestStatus
+    FROM Users
+    LEFT JOIN ClubMemberships ON Users.UserID = ClubMemberships.UserID;
+    ''',
 
+    '''
+    CREATE VIEW ClubDetails AS
+    SELECT Clubs.ClubID, Clubs.Name, Clubs.Description, Clubs.ValidityStatus,
+           Users.Username AS CoordinatorName
+    FROM Clubs
+    LEFT JOIN Users ON Clubs.CoordinatorID = Users.UserID;
+    ''',
+
+    '''
+    CREATE VIEW EventDetails AS
+    SELECT Events.EventID, Events.Title, Events.Description, Events.Date, Events.Time,
+           Events.Venue, Events.ClubID,
+           Clubs.Name AS ClubName, Clubs.Description AS ClubDescription
+    FROM Events
+    LEFT JOIN Clubs ON Events.ClubID = Clubs.ClubID;
+    ''',
+
+    '''
+    CREATE VIEW EventRegistrationsDetails AS
+    SELECT EventRegistrations.RegistrationID, EventRegistrations.UserID, EventRegistrations.EventID,
+           Users.Username AS UserName, Users.Contact AS UserContact, Users.Email AS UserEmail,
+           Events.Title AS EventTitle, Events.Date AS EventDate, Events.Time AS EventTime, Events.Venue AS EventVenue
+    FROM EventRegistrations
+    LEFT JOIN Users ON EventRegistrations.UserID = Users.UserID
+    LEFT JOIN Events ON EventRegistrations.EventID = Events.EventID;
+    ''',
+
+    '''
+    CREATE VIEW UserUpcomingEvents AS
+    SELECT Users.UserID, Users.Username, Users.Email,
+           Events.EventID, Events.Title AS EventTitle, Events.Date AS EventDate, Events.Time AS EventTime, Events.Venue AS EventVenue
+    FROM Users
+    JOIN EventRegistrations ON Users.UserID = EventRegistrations.UserID
+    JOIN Events ON EventRegistrations.EventID = Events.EventID
+    WHERE Events.Date >= DATE('now')
+    ORDER BY Events.Date;
+    '''
+]
+
+# Execute each CREATE VIEW query
+# for create_query in create_view_queries:
+#     cursor.execute(create_query)
+
+# Commit the changes and close the connection
+# conn.commit()
+# conn.close()
+'''
+"""
 #cursor.execute("DELETE FROM Events WHERE EventID = ?", (3,))
 
 # Commit the changes to the database
